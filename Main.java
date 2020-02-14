@@ -23,7 +23,7 @@ public class Main {
 				break;
 			}
 			System.out.println("\n\n\n\n");
-		} while (selection != "3");
+		} while (!selection.equals("3"));
 	}
 
 	/**
