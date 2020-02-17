@@ -34,9 +34,13 @@ public class Main {
     public static void accountMenu(Account acc, Database db) {
         String selection;
         double amount;
+        String to;
+        String subject;
+        String content;
+        boolean state;
         do {
             System.out.println("Hello " + acc.getName());
-            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Messages\n\t6. Log out");
+            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Display Messages\n\t6. Send Message\n\t7. Log out");
             System.out.print("Please make a selection > ");
             selection = keyb.nextLine(); 
             System.out.println("\n");
@@ -64,13 +68,23 @@ public class Main {
                     acc.displayMessages();
                     break;
                 case "6":
+                	System.out.println("Please enter the username of who this messages is for:");
+                	to = keyb.next();
+                	System.out.println("Please enter the subject of the message:");
+                	subject = keyb.next();
+                	System.out.println("Please enter the content of the message:");
+                	content = keyb.next();
+                	state = db.sendMessage(acc.getUsername(), to, subject, content);
+                	if(state) System.out.println("Message successfully sent to " + to + ".");
+                	if(!state) System.out.println("Message was unable to be sent to " + to + " because the username does not exist.");
+                	break;
+                case "7":
                     System.out.println("--Logging Out--");
                     break;
-
             }
 
         System.out.println("\n\n");
-        } while (!selection.equals("6"));
+        } while (!selection.equals("7"));
 
     }
 	
