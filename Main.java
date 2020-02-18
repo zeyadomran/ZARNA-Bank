@@ -40,7 +40,7 @@ public class Main {
         int state;
         do {
             System.out.println("Hello " + acc.getName());
-            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Display Messages\n\t6. Send Message\n\t7. Display Log\n\t8. Log out");
+            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Display Messages\n\t6. Send Message\n\t7. Display Log\n\t8. Edit Info\n\t9. Log out");
             System.out.print("Please make a selection > ");
             selection = keyb.nextLine().trim(); 
             System.out.println("\n");
@@ -96,15 +96,29 @@ public class Main {
                     acc.displayLog();
                     break;
                 case "8":
+                    editMenu(acc, db);
+                    break;
+                case "9":
                     System.out.println("--Logging Out--");
                     break;
             }
         System.out.println("\n\n");
-        } while (!selection.equals("8"));
+        } while (!selection.equals("9"));
 
     }
 	
-	/**
+    // ***********************************
+    /**
+     * Edit info menu Menu
+     * @param acc -> object of type Account
+     * @param db -> object of type Database
+     */
+    public static void editMenu(Account acc, Database db) {
+    	// Code Here
+    }
+    // ***********************************
+
+    /**
      * Function used to get a double amount, error checking and exception handling within
      * @return a valid double amount entered by user
      */
