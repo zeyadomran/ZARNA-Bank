@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
+	
 	static Database db = new Database(1);
-
 	static Scanner keyb = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -28,8 +28,8 @@ public class Main {
 
 	/**
      * Account Menu
-     * @param acc    ->    object of type Account
-     * @param db    ->    object of type Database
+     * @param acc -> object of type Account
+     * @param db -> object of type Database
      */
     public static void accountMenu(Account acc, Database db) {
         String selection;
@@ -40,7 +40,7 @@ public class Main {
         int state;
         do {
             System.out.println("Hello " + acc.getName());
-            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Display Messages\n\t6. Send Message\n\t7. Log out");
+            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Display Messages\n\t6. Send Message\n\t7. Display Log\n\t8. Edit Info\n\t9. Log out");
             System.out.print("Please make a selection > ");
             selection = keyb.nextLine().trim(); 
             System.out.println("\n");
@@ -52,17 +52,30 @@ public class Main {
                     System.out.println("Please enter the amount you wish to deposit:");
                     amount = getAmount();
                     keyb.nextLine(); //Clears Scanner
-                    acc.deposit(amount);
-                    System.out.println("Deposit Successful");
+                    state = acc.deposit(amount);
+                    if(state == 1) System.out.println("Deposit Successful");
+                    if(state == 0) System.out.println("\nThe amount must be larger than 0.");
                     break;
                 case "3":
                     System.out.println("Please enter the amount you wish to withdraw:");
                     amount = getAmount();
                     keyb.nextLine(); //Clears Scanner
-                    acc.withdraw(amount);
+                    state = acc.withdraw(amount);
+                    if(state == 0) 	System.out.println("Incompatible amount to withdraw.");
+                    if(state == 1) 	System.out.println("Withdraw successful.");
                     break;
                 case "4":
-                    //Transfer
+                	System.out.println("Please enter the username of who this transfer is for:");
+                	to = keyb.nextLine().trim();
+                	System.out.println("Please enter the amount you wish to transfer:");
+                    amount = getAmount();
+                    keyb.nextLine(); //Clears Scanner
+                    state = db.transfer(acc.getUsername(), to, amount);
+                    if(state == 1) System.out.println("\nTransfer successfully sent to " + to + ".");
+                    if(state == 0) System.out.println("\nBalance is lower than the amount you wish to trasnfer to " + to + ".");
+                    if(state == -1) System.out.println("\nThe amount must be larger than 0.");
+                    if(state == -2) System.out.println("\nTransfer was unable to be sent to " + to + ", because the username does not exist.");
+                	if(state == -3) System.out.println("\nYou cannot send a transfer to yourself!");
                     break;
                 case "5":
                     acc.displayMessages();
@@ -80,16 +93,32 @@ public class Main {
                 	if(state == -1) System.out.println("\nMessage was unable to be sent to " + to + ", because the username does not exist.");
                 	break;
                 case "7":
+                    acc.displayLog();
+                    break;
+                case "8":
+                    editMenu(acc, db);
+                    break;
+                case "9":
                     System.out.println("--Logging Out--");
                     break;
             }
-
         System.out.println("\n\n");
-        } while (!selection.equals("7"));
+        } while (!selection.equals("9"));
 
     }
 	
-	/**
+    // ***********************************
+    /**
+     * Edit info menu Menu
+     * @param acc -> object of type Account
+     * @param db -> object of type Database
+     */
+    public static void editMenu(Account acc, Database db) {
+    	// Code Here
+    }
+    // ***********************************
+
+    /**
      * Function used to get a double amount, error checking and exception handling within
      * @return a valid double amount entered by user
      */

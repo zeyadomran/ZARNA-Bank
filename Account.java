@@ -6,13 +6,14 @@ import java.util.ArrayList;
  */
 
 public class Account {
+	
 	private String username;
 	private String firstName;
 	private String lastName;
 	private String password = null;
 	private double balance;
 	private ArrayList<Message> messages;
-
+	private ArrayList<Transaction> log;
 	/**
 	 * Constructor for Account, initializes a new object of the class
 	 * 
@@ -29,6 +30,7 @@ public class Account {
 		this.setPassword(pwd);
 		this.balance = 0.0;
 		this.messages = new ArrayList<Message>();
+		this.log = new ArrayList<Transaction>();
 	}
 
 	/**
@@ -42,6 +44,7 @@ public class Account {
 		this.password = null;
 		this.setBalance(copyFrom.getBalance());
 		this.messages = copyFrom.getMessages();
+		this.log = copyFrom.getLog();
 
 	}
 
@@ -146,13 +149,21 @@ public class Account {
 	}
 
 	/**
-	 * Get method for ArrayList messages, encapsulation within to prevent privacy
-	 * leaks
+	 * Get method for ArrayList messages, encapsulation within to prevent privacy leaks
 	 * 
 	 * @return a copy of the object's instance 'messages', completely encapsulated.
 	 */
 	public ArrayList<Message> getMessages() {
 		return new ArrayList<Message>(this.messages);
+	}
+	
+	/**
+	 * Get method for ArrayList log, encapsulation within to prevent privacy leaks
+	 * 
+	 * @return a copy of the object's instance 'log', completely encapsulated.
+	 */
+	public ArrayList<Transaction> getLog() {
+		return new ArrayList<Transaction>(this.log);
 	}
 
 	// *************************Other_Methods*************************
@@ -164,11 +175,36 @@ public class Account {
 	 * 
 	 * @param amount -> a double representing the amount to deposit within the
 	 *               object's balance
+	 * @return 1 -> success
+	 * @return 0 -> amount less than 0
 	 */
-	public void deposit(double amount) {
+	public int deposit(double amount) {
 		if (amount > 0) {
 			this.balance += amount;
+			this.addTransaction("Deposit", "Deposit to account", amount);
+			return 1;
 		}
+		return 0;
+	}
+	
+	/**
+	 * Function used to deposit a value into the object's balance. Error checking
+	 * within to ensure the argument is greater then zero. If an argument is
+	 * invalid, nothing is added to the object's balance
+	 * 
+	 * @param amount -> a double representing the amount to deposit within the
+	 *               object's balance
+	 * @param fr-> user the money is deposited from
+	 * @return 1 -> success
+	 * @return 0 -> amount less than 0
+	 */
+	public int deposit(double amount, String fr) {
+		if (amount > 0) {
+			this.balance += amount;
+			this.addTransaction("Transfer", "Transfer from " + fr, amount);
+			return 1;
+		}
+		return 0;
 	}
 
 	/**
@@ -179,12 +215,38 @@ public class Account {
 	 * 
 	 * @param amount -> a double representing the amount to withdraw from an
 	 *               object's balance
+	 * @return 1 -> success
+	 * @return 0 -> balance less than amount             
 	 */
-	public void withdraw(double amount) {
+	public int withdraw(double amount) {
 		if (amount > this.getBalance()) {
-			System.out.println("INCOMPATIBLE AMOUNT TO WITHDRAW");
+			return 0;
 		} else {
 			this.balance -= amount;
+			this.addTransaction("Withdraw", "Withdraw from account", (-1 * amount));
+			return 1;
+		}
+	}
+	
+	/**
+	 * Function used to subtract a value from the object's balance. Error checking
+	 * within to ensure the argument is able to be subtracted from the balance. If
+	 * the argument is invalid and error message is displayed to console, and the
+	 * balance remains unchanged.
+	 * 
+	 * @param amount -> a double representing the amount to withdraw from an
+	 *               object's balance
+	 * @param to -> user the money is withdrawed for
+	 * @return 1 -> success
+	 * @return 0 -> balance less than amount             
+	 */
+	public boolean withdraw(double amount, String to) {
+		if (amount > this.getBalance()) {
+			return false;
+		} else {
+			this.balance -= amount;
+			this.addTransaction("Transfer", "Transfer to " + to, (-1 * amount));
+			return true;
 		}
 	}
 
@@ -200,8 +262,7 @@ public class Account {
 	}
 
 	/**
-	 * Function allowing for a String to be deposited within an object's message
-	 * ArrayList
+	 * Function allowing for adding messages
 	 * 
 	 * @param fr  -> string representing the sender's username
 	 * @param to  -> string representing reciever's username
@@ -211,24 +272,50 @@ public class Account {
 	public void addMessage(String fr, String to, String sub, String con ) {
 		this.messages.add(new Message(fr, to, sub, con));
 	}
-
 	
+	/**
+	 * Method for adding transactions
+	 * 
+	 * @param type  -> string representing the type of the transaction
+	 * @param note  -> string representing the transaction's description
+	 * @param amount  -> double representing the amount
+	 */
+	public void addTransaction(String type, String note, double amount) {
+		this.log.add(new Transaction(type, note, amount));
+	}
+
+	/**
+	 * Function that displays all the messages sent to this instances account
+	 */
 	public void displayMessages() {
 		ArrayList<Message> m = this.getMessages();
-
 		System.out.println("****************************START_OF_MESSAGES****************************");
-
 		if (m.size() == 0) {
 			System.out.println("You have no messages!");
 		} else {
 			for (int i = 0; i < m.size(); i++) {
 				System.out.println(String.valueOf(i + 1) + ") \t");
 				System.out.println("From: \t" + m.get(i).getSender() + "\nSubject: \t" + m.get(i).getSubject() + "\nContent: \t" + m.get(i).getContent() + "\nTime: \t" + m.get(i).getTimestamp() + "\n");
-
 			}
 		}
-
 		System.out.println("*****************************END_OF_MESSAGES*****************************");
+	}
+	
+	/**
+	 * Function that displays all the transaction made by this instances account
+	 */
+	public void displayLog() {
+		ArrayList<Transaction> log = this.getLog();
+		System.out.println("****************************START_OF_LOG****************************");
+		if (log.size() == 0) {
+			System.out.println("You have no transactions!");
+		} else {
+			for (int i = 0; i < log.size(); i++) {
+				System.out.println(String.valueOf(i + 1) + ") \t");
+				System.out.println("Type: \t" + log.get(i).getType() + "\nNote: \t" + log.get(i).getNote() + "\nAmount: \t" + log.get(i).getAmount() + "\nTime: \t" + log.get(i).getTimestamp() + "\n");
+			}
+		}
+		System.out.println("*****************************END_OF_LOG*****************************");
 	}
 
 }

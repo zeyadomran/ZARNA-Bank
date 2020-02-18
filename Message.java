@@ -17,11 +17,10 @@ public class Message {
 	 * Constructor for Messages, initializes a new object of the class
 	 * 
 	 * @param fr  -> string representing the sender's username
-	 * @param to  -> string representing reciever's username
-	 * @param sub  -> string representingthe subject of the message
+	 * @param to  -> string representing the reciever's username
+	 * @param sub  -> string representing the subject of the message
 	 * @param con -> string representing the content of the message
 	 */
-	
 	public Message(String fr, String to, String sub, String con) {
 		this.from = fr;
 		this.to = to;
@@ -76,5 +75,4 @@ public class Message {
 	public String getTimestamp() {
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.ts);
 	}
-	
 }
