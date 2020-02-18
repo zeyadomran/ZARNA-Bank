@@ -11,7 +11,7 @@ public class Account {
 	private String lastName;
 	private String password = null;
 	private double balance;
-	private ArrayList<String> messages;
+	private ArrayList<Message> messages;
 
 	/**
 	 * Constructor for Account, initializes a new object of the class
@@ -28,7 +28,7 @@ public class Account {
 		this.setName(fN, lN);
 		this.setPassword(pwd);
 		this.balance = 0.0;
-		this.messages = new ArrayList<String>();
+		this.messages = new ArrayList<Message>();
 	}
 
 	/**
@@ -151,8 +151,8 @@ public class Account {
 	 * 
 	 * @return a copy of the object's instance 'messages', completely encapsulated.
 	 */
-	public ArrayList<String> getMessages() {
-		return new ArrayList<String>(this.messages);
+	public ArrayList<Message> getMessages() {
+		return new ArrayList<Message>(this.messages);
 	}
 
 	// *************************Other_Methods*************************
@@ -203,37 +203,27 @@ public class Account {
 	 * Function allowing for a String to be deposited within an object's message
 	 * ArrayList
 	 * 
-	 * @param message -> a String representing the message being added to the
-	 *                object's ArrayList
+	 * @param fr  -> string representing the sender's username
+	 * @param to  -> string representing reciever's username
+	 * @param sub  -> string representingthe subject of the message
+	 * @param con -> string representing the content of the message
 	 */
-	public void addMessage(String message) {
-		this.messages.add(message + " |<Unkown_User>");
+	public void addMessage(String fr, String to, String sub, String con ) {
+		this.messages.add(new Message(fr, to, sub, con));
 	}
 
-	/**
-	 * Function allowing for a String to be deposited within an object's message
-	 * ArrayList
-	 * 
-	 * @param message  -> a String representing the message being added to the
-	 *                 object's ArrayList
-	 * @param username -> a String representing the username of the account sending
-	 *                 the message
-	 */
-	public void addMessage(String message, String username) {
-		this.messages.add(message + " |" + username);
-	}
-
+	
 	public void displayMessages() {
-		ArrayList<String> m = this.getMessages();
+		ArrayList<Message> m = this.getMessages();
 
 		System.out.println("****************************START_OF_MESSAGES****************************");
 
 		if (m.size() == 0) {
-			System.out.println("You Have No Messages");
+			System.out.println("You have no messages!");
 		} else {
 			for (int i = 0; i < m.size(); i++) {
-				System.out.print(String.valueOf(i + 1) + ") \t");
-				System.out.println(m.get(i) + "\n");
+				System.out.println(String.valueOf(i + 1) + ") \t");
+				System.out.println("From: \t" + m.get(i).getSender() + "\nSubject: \t" + m.get(i).getSubject() + "\nContent: \t" + m.get(i).getContent() + "\nTime: \t" + m.get(i).getTimestamp() + "\n");
 
 			}
 		}

@@ -108,11 +108,16 @@ public class Database {
 	/**
 	 * Adds a message to a given account
 	 * 
-	 * @param username of the account to send message to
-	 * @param msg      message to send
+	 * @param fr  -> string representing the sender's username
+	 * @param to  -> string representing reciever's username
+	 * @param sub  -> string representingthe subject of the message
+	 * @param con -> string representing the content of the message
 	 */
-	public void sendMessage(String username, String msg) {
-		accounts.get(getUserIndex(username)).addMessage(msg + accounts.get(getUserIndex(username)).getName());
+	public int sendMessage(String fr, String to, String sub, String con) {
+		if(!userExists(to)) return -1;
+		if(fr.equals(to)) return 0;
+		accounts.get(getUserIndex(to)).addMessage(fr, to, sub, con);
+		return 1;
 	}
 
 }

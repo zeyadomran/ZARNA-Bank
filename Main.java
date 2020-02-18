@@ -13,7 +13,7 @@ public class Main {
 		String selection;
 		do {
 			System.out.println("Please enter a number\n\t1. Login\n\t2. Create Account\n\t3. Exit");
-			selection = keyb.nextLine();
+			selection = keyb.nextLine().trim();
 			switch (selection) {
 			case "1":
 				login();
@@ -34,11 +34,15 @@ public class Main {
     public static void accountMenu(Account acc, Database db) {
         String selection;
         double amount;
+        String to;
+        String subject;
+        String content;
+        int state;
         do {
             System.out.println("Hello " + acc.getName());
-            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Messages\n\t6. Log out");
+            System.out.println("\t1. Check Balance\n\t2. Deposit\n\t3. Withdraw\n\t4. Transfer\n\t5. Display Messages\n\t6. Send Message\n\t7. Log out");
             System.out.print("Please make a selection > ");
-            selection = keyb.nextLine(); 
+            selection = keyb.nextLine().trim(); 
             System.out.println("\n");
             switch(selection) {
                 case "1":
@@ -64,13 +68,24 @@ public class Main {
                     acc.displayMessages();
                     break;
                 case "6":
+                	System.out.println("Please enter the username of who this messages is for:");
+                	to = keyb.nextLine().trim();
+                	System.out.println("\nPlease enter the subject of the message:");
+                	subject = keyb.nextLine().trim();
+                	System.out.println("\nPlease enter the content of the message:");
+                	content = keyb.nextLine().trim();
+                	state = db.sendMessage(acc.getUsername(), to, subject, content);
+                	if(state == 1) System.out.println("\nMessage successfully sent to " + to + ".");
+                	if(state == 0) System.out.println("\nYou cannot send a message to yourself!");
+                	if(state == -1) System.out.println("\nMessage was unable to be sent to " + to + ", because the username does not exist.");
+                	break;
+                case "7":
                     System.out.println("--Logging Out--");
                     break;
-
             }
 
         System.out.println("\n\n");
-        } while (!selection.equals("6"));
+        } while (!selection.equals("7"));
 
     }
 	
@@ -102,9 +117,9 @@ public class Main {
 	public static void login() {
 		Account a = null;
 		System.out.println("\nPlease enter your username");
-		String uName = keyb.nextLine();
+		String uName = keyb.nextLine().trim();
 		System.out.println("\nPlease enter your password");
-		String pswd = keyb.nextLine();
+		String pswd = keyb.nextLine().trim();
 		a = db.login(uName, pswd);
 		if (a == null)
 			System.out.println("\nLogin failed");
@@ -116,23 +131,22 @@ public class Main {
 	}
 
 	public static void createAccount(Database db) {
-		boolean valid;
 		String uName, fName, lName, pswd, pswd2;
 		do {
 			System.out.println("\nPlease create a username");
-			uName = keyb.nextLine();
+			uName = keyb.nextLine().trim();
 			if (db.userExists(uName))
 				System.out.println("\nUsername already exists; please try again");
 		} while (db.userExists(uName));
 		System.out.println("\nPlease enter your first name");
-		fName = keyb.nextLine();
+		fName = keyb.nextLine().trim();
 		System.out.println("\nPlease enter you last name");
-		lName = keyb.nextLine();
+		lName = keyb.nextLine().trim();
 		do {
 			System.out.println("\nPlease create a password");
-			pswd = keyb.nextLine();
+			pswd = keyb.nextLine().trim();
 			System.out.println("\nPlease re-type your password");
-			pswd2 = keyb.nextLine();
+			pswd2 = keyb.nextLine().trim();
 			if (!pswd.equals(pswd2))
 				System.out.println("\nPasswords did not match, please try again");
 		} while (!pswd.equals(pswd2));
