@@ -13,7 +13,7 @@ public class Account {
 	private String password = null;
 	private double balance;
 	private ArrayList<Message> messages;
-	private ArrayList<AccountLog> log;
+	private ArrayList<Transaction> log;
 	/**
 	 * Constructor for Account, initializes a new object of the class
 	 * 
@@ -30,7 +30,7 @@ public class Account {
 		this.setPassword(pwd);
 		this.balance = 0.0;
 		this.messages = new ArrayList<Message>();
-		this.log = new ArrayList<AccountLog>();
+		this.log = new ArrayList<Transaction>();
 	}
 
 	/**
@@ -162,8 +162,8 @@ public class Account {
 	 * 
 	 * @return a copy of the object's instance 'log', completely encapsulated.
 	 */
-	public ArrayList<AccountLog> getLog() {
-		return new ArrayList<AccountLog>(this.log);
+	public ArrayList<Transaction> getLog() {
+		return new ArrayList<Transaction>(this.log);
 	}
 
 	// *************************Other_Methods*************************
@@ -281,7 +281,7 @@ public class Account {
 	 * @param amount  -> double representing the amount
 	 */
 	public void addTransaction(String type, String note, double amount) {
-		this.log.add(new AccountLog(type, note, amount));
+		this.log.add(new Transaction(type, note, amount));
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class Account {
 	 * Function that displays all the transaction made by this instances account
 	 */
 	public void displayLog() {
-		ArrayList<AccountLog> log = this.getLog();
+		ArrayList<Transaction> log = this.getLog();
 		System.out.println("****************************START_OF_LOG****************************");
 		if (log.size() == 0) {
 			System.out.println("You have no transactions!");

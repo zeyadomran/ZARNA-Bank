@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
  * @author Zeyad Omran
  */
 
-public class AccountLog {
+public class Transaction {
 	
 	private String type;
 	private String note;
@@ -13,13 +13,13 @@ public class AccountLog {
 	private Timestamp ts;
 	
 	/**
-	 * Constructor for AccountLog, initializes a new object of the class
+	 * Constructor for Transaction, initializes a new object of the class
 	 * 
 	 * @param type  -> string representing the type of the transaction
 	 * @param note  -> string representing the transaction's description
 	 * @param amount  -> double representing the amount
 	 */
-	public AccountLog(String type, String note, double amount) {
+	public Transaction(String type, String note, double amount) {
 		this.type = type;
 		this.note = note;
 		this.amount = amount;
@@ -29,7 +29,7 @@ public class AccountLog {
 	// *************************GETTERS*************************
 	
 		/**
-		 * Get method for instance from
+		 * Get method for instance type
 		 * 
 		 * @return a String representing the type of the transaction
 		 */
@@ -38,7 +38,7 @@ public class AccountLog {
 	}
 	
 	/**
-	 * Get method for instance from
+	 * Get method for instance note
 	 * 
 	 * @return a String representing the description of the transaction
 	 */
@@ -47,7 +47,7 @@ public class AccountLog {
 	}
 	
 	/**
-	 * Get method for instance from
+	 * Get method for instance amount
 	 * 
 	 * @return a double representing the amount of the transaction
 	 */
@@ -56,7 +56,7 @@ public class AccountLog {
 	}
 	
 	/**
-	 * Get method for instance from
+	 * Get method for instance timestamp
 	 * 
 	 * @return a String representing the timestamp of the transaction
 	 */

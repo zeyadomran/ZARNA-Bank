@@ -13,7 +13,7 @@ public class Database {
 	/**
 	 * Creates a new database
 	 * 
-	 * @param id ID of the database
+	 * @param id -> ID of the database
 	 */
 	Database(int id) {
 		this.id = id;
@@ -24,7 +24,7 @@ public class Database {
 	 * Copy Constructor, sets same id as database passed, and adds a copy of
 	 * accounts list
 	 * 
-	 * @param db the database to copy
+	 * @param db -> the database to copy
 	 */
 	Database(Database db) {
 		this.id = db.id;
@@ -42,7 +42,7 @@ public class Database {
 	/**
 	 * Searches through accounts to find a specified account's location
 	 * 
-	 * @param userId The ID of the user you are looking for
+	 * @param userId -> The ID of the user you are looking for
 	 * @return The index of the user within accounts, or -1 if the account is not found
 	 */
 	private int getUserIndex(String username) {
@@ -57,7 +57,7 @@ public class Database {
 	/**
 	 * Finds the index of an account within the accounts list
 	 * 
-	 * @param username account to look for
+	 * @param username -> account to look for
 	 * @return whether the user exists or not
 	 */
 	public boolean userExists(String username) {
@@ -67,7 +67,7 @@ public class Database {
 	/**
 	 * Removes an account within the database
 	 * 
-	 * @param username the username of the account to delete
+	 * @param username -> the username of the account to delete
 	 */
 	public void removeUser(String username) {
 		accounts.remove(getUserIndex(username));
@@ -76,7 +76,7 @@ public class Database {
 	/**
 	 * Appends given account to the end of accounts list
 	 * 
-	 * @param account  account to add
+	 * @param account -> account to add
 	 * @param password of the account being added
 	 */
 	public void addUser(Account account, String password) {
@@ -116,8 +116,8 @@ public class Database {
 	 * Checks whether the username is linked to an account in the database, and that
 	 * the given password matches the account's password
 	 * 
-	 * @param username of the account to login to
-	 * @param password of the account to login to
+	 * @param username -> the account to login to
+	 * @param password -> the account to login to
 	 * @return whether access is granted to an account
 	 */
 	public Account login(String username, String password) {
