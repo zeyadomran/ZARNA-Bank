@@ -113,11 +113,11 @@ public class Database {
 	 * @param sub  -> string representingthe subject of the message
 	 * @param con -> string representing the content of the message
 	 */
-	public boolean sendMessage(String fr, String to, String sub, String con) {
-		if(!userExists(to)) return false;
+	public int sendMessage(String fr, String to, String sub, String con) {
+		if(!userExists(to)) return -1;
+		if(fr.equals(to)) return 0;
 		accounts.get(getUserIndex(to)).addMessage(fr, to, sub, con);
-		System.out.println(fr + to + sub + con);
-		return true;
+		return 1;
 	}
 
 }

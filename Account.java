@@ -223,7 +223,7 @@ public class Account {
 		} else {
 			for (int i = 0; i < m.size(); i++) {
 				System.out.println(String.valueOf(i + 1) + ") \t");
-				System.out.println("From: \t" + m.get(i).getSender() + "\nTo:   \t" + m.get(i).getReciever() + "\nSubject: \t" + m.get(i).getSubject() + "\nContent: \t" + m.get(i).getContent() + "\nTime: \t" + m.get(i).getTimestamp() + "\n");
+				System.out.println("From: \t" + m.get(i).getSender() + "\nSubject: \t" + m.get(i).getSubject() + "\nContent: \t" + m.get(i).getContent() + "\nTime: \t" + m.get(i).getTimestamp() + "\n");
 
 			}
 		}

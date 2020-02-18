@@ -1,4 +1,5 @@
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * @author Zeyad Omran
@@ -73,7 +74,7 @@ public class Message {
 	 * @return a String representing the message's instance timestamp
 	 */
 	public String getTimestamp() {
-		return this.ts.toString();
+		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.ts);
 	}
 	
 }
