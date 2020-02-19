@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Database {
 	
-	private int id;
+	//private int id;
 	private ArrayList<Account> accounts;
 
 	/**
@@ -15,8 +15,8 @@ public class Database {
 	 * 
 	 * @param id -> ID of the database
 	 */
-	Database(int id) {
-		this.id = id;
+	Database() {
+		//this.id = id;
 		accounts = new ArrayList<Account>();
 	}
 
@@ -27,7 +27,7 @@ public class Database {
 	 * @param db -> the database to copy
 	 */
 	Database(Database db) {
-		this.id = db.id;
+		//this.id = db.id;
 		this.accounts = copyAccountsList(db.accounts);
 	}
 
@@ -38,7 +38,15 @@ public class Database {
 		}
 		return copy;
 	}
-
+	
+	public ArrayList<Account> getAccountsList() {
+		ArrayList<Account> copy = new ArrayList<Account>();
+		for (Account account : this.accounts) {
+			copy.add(new Account(account));
+		}
+		return copy;
+	}
+	
 	/**
 	 * Searches through accounts to find a specified account's location
 	 * 
