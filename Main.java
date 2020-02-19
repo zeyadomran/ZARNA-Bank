@@ -104,7 +104,7 @@ public class Main {
             }
         System.out.println("\n\n");
         } while (!selection.equals("9"));
-
+        
     }
 	
     // ***********************************
@@ -114,8 +114,79 @@ public class Main {
      * @param db -> object of type Database
      */
     public static void editMenu(Account acc, Database db) {
-    	// Code Here
-    }
+    	//Start to code the menu, this method is used for changing some user's informations.
+    	String selection;
+    	String newUser;//new username that user want to change.
+    	String newfN;  //new firstname that user want to change.
+    	String newlN;  //new lastname that user want to change.
+    	String selectionf;//selection for change firstname.
+    	String selectionl;//selection for change lastname.
+    	do {
+    		System.out.println("\n\nHello!How can I help you today? "+"'"+ acc.getName()+"'");
+    		System.out.println("If you want change your Username, press 1 and type Enter.\n");
+    		System.out.println("If you want change your firstname, press 2 and type Enter.\n");
+    		System.out.println("If you want change your lastname, press 3 and type Enter.\n");
+    		System.out.println("If you want to return to the main menu, press 4 and type Enter.\n");
+    		selection=keyb.nextLine().trim();
+    		System.out.println("\n\n");
+    		switch(selection) {
+    		case "1":
+    			System.out.println("Your current Username is "+"'"+acc.getUsername()+"'");
+    			System.out.println("Please enter the new Username you want to change:\n(note:You won't be able to change your new Username if it already used by others)");
+    			newUser=keyb.nextLine();
+    			while (db.userExists(newUser)) {
+    				System.out.println("\nI'm sorry,that Username already exists; How about try another one?");
+    				System.out.println("Another one:");
+    				newUser=keyb.nextLine();
+    			}
+    			acc.setUsername(newUser);
+    			System.out.println("\nYou have changed your Username successfully,your new Username is: "+acc.getUsername()+"\n");
+    			
+    		     break;
+    		case "2":
+    			System.out.println("Your current firstname is "+"'"+acc.getFirstName()+"'");
+    			System.out.println("Please enter the new firstname you want to change: ");
+    			newfN=keyb.nextLine();
+    			System.out.println("\nI'm going to change your firstname from "+"'"+acc.getFirstName()+"'"+"to "+"'"+newfN+"'");
+    			System.out.println("\nAre you sure you want to make this change?\nPress 'yes' to confirm.\notherwise, type anything other than 'yes'.");
+    			selectionf=keyb.nextLine();
+    			if (selectionf.equals("yes")) {
+    				acc.setFirstName(newfN);
+    				System.out.println("\nYou have changed your firstname successfully,your new firstname is: "+acc.getFirstName()+"\n");
+    				break;
+    			}
+    			else
+    				System.out.println("\n\n");
+    				break;
+    		case "3":
+    			System.out.println("Your current lastname is "+"'"+acc.getLastName()+"'");
+    			System.out.println("Please enter the new lastname you want to change: ");
+    			newlN=keyb.nextLine();
+    			System.out.println("\nI'm going to change your lastname from "+"'"+acc.getLastName()+"'"+"to "+"'"+newlN+"'");
+    			System.out.println("\nAre you sure you want to make this change?\nPress 'yes' to confirm.\notherwise, type anything other than 'yes'.");
+    			selectionl=keyb.nextLine();
+    			if (selectionl.equals("yes")) {
+    				acc.setLastName(newlN);
+    				System.out.println("\nYou have changed your lastname successfully,your new lastname is: "+acc.getLastName()+"\n");
+    				break;
+    			}
+    			else
+    				System.out.println("\n\n");
+    				break;
+    		case "4":
+    			System.out.println("--Renturn to main menu--");
+    			break;
+    		}	
+    		}while(!selection.equals("4"));
+    	
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    
     // ***********************************
 
     /**

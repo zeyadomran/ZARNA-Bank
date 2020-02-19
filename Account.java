@@ -27,6 +27,8 @@ public class Account {
 	public Account(String uN, String fN, String lN, String pwd) {
 		this.setUsername(uN);
 		this.setName(fN, lN);
+		this.setFirstName(fN);
+		this.setLastName(lN);
 		this.setPassword(pwd);
 		this.balance = 0.0;
 		this.messages = new ArrayList<Message>();
@@ -41,6 +43,8 @@ public class Account {
 	public Account(Account copyFrom) {
 		this.setUsername(copyFrom.getUsername());
 		this.setName(copyFrom.getFirstName(), copyFrom.getLastName());
+		this.setFirstName(copyFrom.getFirstName());
+		this.setLastName(copyFrom.getLastName());
 		this.password = null;
 		this.setBalance(copyFrom.getBalance());
 		this.messages = copyFrom.getMessages();
@@ -69,6 +73,16 @@ public class Account {
 	public void setName(String fN, String lN) {
 		this.firstName = fN;
 		this.lastName = lN;
+	}
+	
+	
+	//New added, to set firstname and lastname individually, commen used in editMenu method.
+	
+	public void setFirstName(String FN) {
+		this.firstName = FN;
+	}
+	public void setLastName(String LN) {
+		this.lastName = LN;
 	}
 
 	/**
