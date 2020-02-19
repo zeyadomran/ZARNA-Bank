@@ -10,7 +10,7 @@ public class Account {
 	private String username;
 	private String firstName;
 	private String lastName;
-	private String password = null;
+	private String password;
 	private double balance;
 	private ArrayList<Message> messages;
 	private ArrayList<Transaction> log;
@@ -41,7 +41,7 @@ public class Account {
 	public Account(Account copyFrom) {
 		this.setUsername(copyFrom.getUsername());
 		this.setName(copyFrom.getFirstName(), copyFrom.getLastName());
-		this.password = null;
+		this.password = copyFrom.getPassword();
 		this.setBalance(copyFrom.getBalance());
 		this.messages = copyFrom.getMessages();
 		this.log = copyFrom.getLog();
@@ -72,32 +72,48 @@ public class Account {
 	}
 
 	/**
-	 * Sets an objects password Error checking within, only changes password if the
-	 * current objects password is null. That way passwords can't be publicly be
-	 * overridden
+	 * Sets an objects password 
 	 * 
-	 * @param pwd -> String representing the password being set, only works if the
-	 *            current objects password == null.
+	 * @param pwd -> String representing the password being set
 	 */
 	public void setPassword(String pwd) {
-
 		// ensures that only a new password can be set, and not overridden
-		if (this.password == null) {
 			this.password = pwd;
-		}
 	}
 
 	/**
-	 * Sets object's balance, private. Error check within, argument can't be
+	 * Sets object's balance. Error check within, argument can't be
 	 * negative. If an error is detected, balance of the object is set to 0
 	 * 
 	 * @param bal -> the amount that the object's balance should be set to
 	 */
-	private void setBalance(double bal) {
+	public void setBalance(double bal) {
 		if (bal >= 0.0) {
 			this.balance = bal;
 		} else {
 			this.balance = 0.0;
+		}
+	}
+	
+	/**
+	 * Sets object's messages. 
+	 * 
+	 * @param msgs -> ArrayList with Object Message
+	 */
+	public void setMessages(ArrayList<Message> msgs) {
+		for(Message msg : msgs) {
+			this.messages.add(msg);
+		}
+	}
+	
+	/**
+	 * Sets object's transactions. 
+	 * 
+	 * @param trans -> ArrayList with Object transaction
+	 */
+	public void setTransactions(ArrayList<Transaction> trans) {
+		for(Transaction tran : trans) {
+			this.log.add(tran);
 		}
 	}
 
@@ -137,6 +153,15 @@ public class Account {
 	 */
 	public String getLastName() {
 		return this.lastName;
+	}
+	
+	/**
+	 * Get method for instance password
+	 * 
+	 * @return a String representing the object's instance password
+	 */
+	public String getPassword() {
+		return this.password;
 	}
 
 	/**

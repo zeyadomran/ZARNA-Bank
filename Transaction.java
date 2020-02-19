@@ -10,7 +10,7 @@ public class Transaction {
 	private String type;
 	private String note;
 	private double amount;
-	private Timestamp ts;
+	private String ts;
 	
 	/**
 	 * Constructor for Transaction, initializes a new object of the class
@@ -23,7 +23,14 @@ public class Transaction {
 		this.type = type;
 		this.note = note;
 		this.amount = amount;
-		this.ts = new Timestamp(System.currentTimeMillis());
+		this.ts = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Timestamp(System.currentTimeMillis()));
+	}
+	
+	public Transaction(String type, String note, double amount, String ts) {
+		this.type = type;
+		this.note = note;
+		this.amount = amount;
+		this.ts =ts;
 	}
 	
 	// *************************GETTERS*************************
@@ -60,7 +67,8 @@ public class Transaction {
 	 * 
 	 * @return a String representing the timestamp of the transaction
 	 */
+	
 	public String getTimestamp() {
-		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.ts);
+		return this.ts;
 	}
 }

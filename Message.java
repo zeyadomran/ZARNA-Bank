@@ -11,7 +11,7 @@ public class Message {
 	private String to;
 	private String subject;
 	private String content;
-	private Timestamp ts;
+	private String ts;
 	
 	/**
 	 * Constructor for Messages, initializes a new object of the class
@@ -26,7 +26,15 @@ public class Message {
 		this.to = to;
 		this.subject = sub;
 		this.content = con;
-		this.ts = new Timestamp(System.currentTimeMillis());
+		this.ts = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Timestamp(System.currentTimeMillis()));
+	}
+	
+	public Message(String fr, String to, String sub, String con, String ts) {
+		this.from = fr;
+		this.to = to;
+		this.subject = sub;
+		this.content = con;
+		this.ts = ts;
 	}
 	
 	// *************************GETTERS*************************
@@ -73,6 +81,6 @@ public class Message {
 	 * @return a String representing the message's instance timestamp
 	 */
 	public String getTimestamp() {
-		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.ts);
+		return this.ts;
 	}
 }
