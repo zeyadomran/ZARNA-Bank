@@ -69,6 +69,6 @@ public class Transaction {
 	 */
 	
 	public String getTimestamp() {
-		return this.ts;
+		return new String(this.ts);
 	}
 }

@@ -140,9 +140,52 @@ public class Main {
      * Edit info menu Menu
      * @param acc -> object of type Account
      * @param db -> object of type Database
+     * @throws IOException 
      */
-    public static void editMenu(Account acc, Database db) {
-    	// Code Here
+    public static void editMenu(Account acc, Database db) throws IOException {
+    	String selection;
+    	String newUser;//new username that user want to change.
+    	String fN;  //new firstname that user want to change.
+    	String lN;  //new lastname that user want to change.
+    	String confirm; 
+    	do {
+    		System.out.println("Hello " + acc.getName());
+            System.out.println("\t1. Change Username\n\t2. Change Name\n\t3. Go Back");
+    		selection=keyb.nextLine().trim();
+    		System.out.println("\n\n");
+    		switch(selection) {
+    		case "1":
+    			System.out.println("Your current Username is "+"'"+acc.getUsername()+"'");
+    			System.out.println("Please enter the new Username you want to change:\n(note:You won't be able to change your new Username if it already used by others)");
+    			newUser=keyb.nextLine();
+    			if(!db.userExists(newUser)) {
+    				System.out.println("Are you sure you want to make this change?\nType 'yes' to confirm.\nOtherwise, type anything other than 'yes'.");
+        			confirm=keyb.nextLine().toLowerCase().trim();
+        			if (confirm.equals("yes")) {
+        				acc.setUsername(newUser);
+            			System.out.println("You have changed your Username successfully, your new Username is: "+acc.getUsername()+"\n");
+            			updateDb(db);
+        			}
+    			}
+    			System.out.println("Username already exists!");
+    		     break;
+    		case "2":
+    			System.out.println("Your current name is "+"'"+acc.getName()+"'");
+    			System.out.println("Please enter the new firstname:");
+    			fN=keyb.nextLine();
+    			System.out.println("Please enter the new lastname:");
+    			lN=keyb.nextLine();
+    			System.out.println("I'm going to change your name from "+"'"+acc.getName()+"'"+"to "+"'"+fN+" "+lN+"'");
+    			System.out.println("Are you sure you want to make this change?\nType 'yes' to confirm.\nOtherwise, type anything other than 'yes'.");
+    			confirm=keyb.nextLine().toLowerCase().trim();
+    			if (confirm.equals("yes")) {
+    				acc.setName(fN, lN);
+    				System.out.println("You have changed your name successfully, your new name is: "+acc.getName()+"\n");
+    				updateDb(db);
+    			}
+    			break;
+    		}
+    	}while(!selection.equals("3"));
     }
     // ***********************************
 
@@ -166,10 +209,9 @@ public class Main {
     		accInfo.put("password", cAcc.getPassword());
     		accInfo.put("balance", cAcc.getBalance());
     		JSONArray msgList = new JSONArray(); // JSON array that holds all the messages for this instance account
-    		Map msgInfo = new LinkedHashMap(5);
     		ArrayList <Message> msgs = cAcc.getMessages();
-    		for(int j = 0; j < msgs.size(); j++) { // loop through messages
-    			Message msg = msgs.get(j);
+    		for(Message msg : msgs) { // loop through messages
+        		Map msgInfo = new LinkedHashMap(5);
     			msgInfo.put("from", msg.getSender());
     			msgInfo.put("to", msg.getReciever());
     			msgInfo.put("subject", msg.getSubject());
@@ -179,10 +221,9 @@ public class Main {
     		}
     		accInfo.put("messages", msgList);
     		JSONArray tranList = new JSONArray(); // JSON array that holds all the transactions for this instance account
-    		Map tranInfo = new LinkedHashMap(4);
     		ArrayList <Transaction> trans = cAcc.getLog();
-    		for(int j = 0; j < trans.size(); j++) { // loop through transactions
-    			Transaction tran = trans.get(j);
+    		for(Transaction tran : trans) { // loop through transactions
+        		Map tranInfo = new LinkedHashMap(4);
     			tranInfo.put("type", tran.getType());
     			tranInfo.put("note", tran.getNote());
     			tranInfo.put("amount", tran.getAmount());
