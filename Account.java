@@ -45,7 +45,6 @@ public class Account {
 		this.setBalance(copyFrom.getBalance());
 		this.messages = copyFrom.getMessages();
 		this.log = copyFrom.getLog();
-
 	}
 
 	// *************************SETTERS*************************

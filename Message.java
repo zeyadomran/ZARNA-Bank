@@ -81,6 +81,6 @@ public class Message {
 	 * @return a String representing the message's instance timestamp
 	 */
 	public String getTimestamp() {
-		return this.ts;
+		return new String(this.ts);
 	}
 }
