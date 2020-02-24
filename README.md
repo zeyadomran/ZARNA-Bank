@@ -8,8 +8,8 @@ Users are able to deposit, withdraw, transfer money, and send message to other u
 2. Use this command in Terminal: **java -jar 'Path to file here'**
 ________
 ##### Members:
-###### 1. Zeyad Omran
-###### 2. Austin Shawaga
-###### 3. Angelina Rochon
-###### 4. Yujeong Chae (Rebecca)
-###### 5. Zhongmin Ma (Neil)
+* Zeyad Omran
+* Austin Shawaga
+* Angelina Rochon
+* Yujeong Chae (Rebecca)
+* Zhongmin Ma (Neil)
