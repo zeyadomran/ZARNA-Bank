@@ -7,7 +7,7 @@ __________
 >1. Download the latest [version](https://github.com/zeyadomran/Zarna-Bank/releases/tag/v1.0).
 >2. Use this command in Terminal:
 >```sh
->$ java -jar \<Path to JAR file\>
+>$ java -jar <Path to JAR file>
 >```
 
 ________
