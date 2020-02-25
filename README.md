@@ -9,7 +9,10 @@ __________
 >```sh
 >$ java -jar <Path to JAR file>
 >```
-
+##### How To Compile The Source Code:
+>1. Download the source code.
+>2. Import both JAR files in 'resources/libraries'.
+>3. Run the program.
 ________
 ##### Members:
 >* Zeyad Omran
