@@ -6,12 +6,12 @@ __________
 ##### How To Launch The Program:
 >1. Download the latest [version](https://github.com/zeyadomran/Zarna-Bank/releases/tag/v1.0).
 >2. Use this command in Terminal or your preferred CLI:
->```sh
->$ java -jar <Path to JAR file>
->```
+> ```sh
+> $ java -jar <Path to JAR file>
+> ```
 ##### How To Compile The Source Code:
 >1. Download the source code.
->2. Import both JAR files in 'resources/libraries'.
+>2. Import both JAR files in `<resources/libraries>`.
 >3. Run the program.
 ________
 ##### Members:
