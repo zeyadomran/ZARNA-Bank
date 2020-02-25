@@ -13,6 +13,8 @@ __________
 >1. Download the source code.
 >2. Import both JAR files in `<resources/libraries>`.
 >3. Run the program.
+##### JUNIT Tests Coming Soon:
+> Stay posted!
 ________
 ##### Members:
 >* Zeyad Omran
