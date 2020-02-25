@@ -5,7 +5,7 @@ __________
 >Users are able to deposit, withdraw, transfer money, and send message to other users. Users can also view their transaction history and edit their information.
 ##### How To Launch The Program:
 >1. Download the latest [version](https://github.com/zeyadomran/Zarna-Bank/releases/tag/v1.0).
->2. Use this command in Terminal:
+>2. Use this command in Terminal or your preferred CLI:
 >```sh
 >$ java -jar <Path to JAR file>
 >```
