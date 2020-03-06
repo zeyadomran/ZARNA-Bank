@@ -1,3 +1,5 @@
+package application;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +11,7 @@ public class Database {
 	
 	//private int id;
 	private ArrayList<Account> accounts;
-
+	
 	/**
 	 * Creates a new database
 	 * 
@@ -61,7 +63,19 @@ public class Database {
 		}
 		return -1;
 	}
-
+	
+	public double deposit(double amount, String uN) {
+		return this.accounts.get(getUserIndex(uN)).deposit(amount);
+	}
+	
+	public double withdraw(double amount, String uN) {
+		return this.accounts.get(getUserIndex(uN)).withdraw(amount);
+	}
+	
+	public double getBalance(String uN) {
+		return this.accounts.get(getUserIndex(uN)).getBalance();
+	}
+	
 	/**
 	 * Finds the index of an account within the accounts list
 	 * 
@@ -132,7 +146,7 @@ public class Database {
 		if (!userExists(username))
 			return null;
 		if (accounts.get(getUserIndex(username)).passwordMatch(password)) {
-			return accounts.get(getUserIndex(username));
+			return this.accounts.get(getUserIndex(username));
 		} else {
 			return null;
 		}
