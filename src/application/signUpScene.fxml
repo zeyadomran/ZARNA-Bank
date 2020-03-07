@@ -23,7 +23,7 @@
                <TextField fx:id="nameSignUp" layoutX="400.0" layoutY="40.0" promptText="Name:" styleClass="inputField" />
                <PasswordField fx:id="passSignUp" layoutX="50.0" layoutY="130.0" promptText="Password:" styleClass="inputField" />
                <PasswordField fx:id="cPassSignUp" layoutX="400.0" layoutY="130.0" promptText="Confirm Password:" styleClass="inputField" />
-               <Button layoutX="225.0" layoutY="220.0" mnemonicParsing="false" onAction="#createAccount" text="Sign Up">
+               <Button defaultButton="true" layoutX="225.0" layoutY="220.0" mnemonicParsing="false" onAction="#createAccount" text="Sign Up">
                   <styleClass>
                      <String fx:value="btn" />
                      <String fx:value="btn1" />

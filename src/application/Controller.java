@@ -24,10 +24,12 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -50,6 +52,23 @@ public class Controller {
 	@FXML private Label welcomeMessageMenu;
 	@FXML private Label balance;
 	
+	// transferScene Elements
+	@FXML private TextField fromTransfer;
+	@FXML private TextField toTransfer;
+	@FXML private TextField amountTransfer;
+	
+	// transactionScene Elements
+	@FXML private Pane transactionPane;
+	
+	// viewMessagesScene Elements
+	@FXML private Pane messagesPane;
+	
+	// transferScene Elements
+	@FXML private TextField fromMessage;
+	@FXML private TextField toMessage;
+	@FXML private TextField subjectMessage;
+	@FXML private TextField contentMessage;
+
 	public Controller() throws FileNotFoundException, IOException, ParseException {
 		this.db = loadDb();
 	}
@@ -58,14 +77,128 @@ public class Controller {
 		this.acc = ac;
 		this.scene = sc;
 		switch(scene) {
-		case "login":
-			break;
-		case "signUp":
-			break;
-		case "mainMenu":
-			balance.setText("Balance: $ " + this.db.getBalance(this.acc.getUsername()));
-			welcomeMessageMenu.setText("Welcome " + acc.getName() + "!");
-			break;	
+			case "login":
+				break;
+			case "signUp":
+				break;
+			case "mainMenu":
+				balance.setText("Balance: $" + String.format("%.2f", this.db.getBalance(this.acc.getUsername())));
+				welcomeMessageMenu.setText("Welcome " + acc.getName() + "!");
+				break;
+			case "transfer":
+				fromTransfer.setText("From: " + this.acc.getUsername());
+				break;
+			case "transactions":
+				this.loadTransactions();
+				break;
+			case "viewMessages":
+				this.loadMessages();
+				break;
+			case "sendMessages":
+				fromMessage.setText("From: " + this.acc.getUsername());
+				break;
+		}
+	}
+	
+	public void loadTransactions() {
+		ArrayList<Transaction> trans = this.db.getTransactions(this.acc.getUsername());
+		if(trans.size() < 1) {
+			Pane transPane = new Pane();
+			transPane.getStyleClass().add("scrollPaneELement");
+			transPane.setLayoutY(0);
+			transPane.setLayoutX(0);
+			Label userMsg = new Label("No transactions!");
+			userMsg.getStyleClass().add("txt");
+			userMsg.getStyleClass().add("txt3");
+			userMsg.setLayoutY(40);
+			userMsg.setLayoutX(40);
+			transPane.getChildren().add(userMsg);
+			transactionPane.getChildren().add(transPane);
+		} else {
+			for(int i = 0; i < trans.size(); i++) {
+				Pane transPane = new Pane();
+				transactionPane.getStyleClass().add("scrollPaneElement2");
+				transPane.getStyleClass().add("scrollPaneElement");
+				transPane.setLayoutY(100 * i);
+				transPane.setLayoutX(0);
+				Label type = new Label("Type: " + trans.get(i).getType());
+				type.getStyleClass().add("txt");
+				type.getStyleClass().add("txt3");
+				type.setLayoutY(10);
+				type.setLayoutX(40);
+				Label note = new Label("Note: " + trans.get(i).getNote());
+				note.getStyleClass().add("txt");
+				note.getStyleClass().add("txt3");
+				note.setLayoutY(30);
+				note.setLayoutX(40);
+				Label amount = new Label("Amount: " + trans.get(i).getAmount());
+				amount.getStyleClass().add("txt");
+				amount.getStyleClass().add("txt3");
+				amount.setLayoutY(50);
+				amount.setLayoutX(40);
+				Label timestamp = new Label("Timestamp: " + trans.get(i).getTimestamp());
+				timestamp.getStyleClass().add("txt");
+				timestamp.getStyleClass().add("txt3");
+				timestamp.setLayoutY(70);
+				timestamp.setLayoutX(40);
+				transPane.getChildren().add(type);
+				transPane.getChildren().add(note);
+				transPane.getChildren().add(amount);
+				transPane.getChildren().add(timestamp);
+				transactionPane.getChildren().add(transPane);
+			}
+			transactionPane.setPrefHeight(100 * trans.size());
+		}
+	}
+	
+	public void loadMessages() {
+		ArrayList<Message> msgs = this.db.getMessages(this.acc.getUsername());
+		if(msgs.size() < 1) {
+			Pane msgPane = new Pane();
+			msgPane.getStyleClass().add("scrollPaneELement");
+			msgPane.setLayoutY(0);
+			msgPane.setLayoutX(0);
+			Label userMsg = new Label("No Messages!");
+			userMsg.getStyleClass().add("txt");
+			userMsg.getStyleClass().add("txt3");
+			userMsg.setLayoutY(40);
+			userMsg.setLayoutX(40);
+			msgPane.getChildren().add(userMsg);
+			messagesPane.getChildren().add(msgPane);
+		} else {
+			for(int i = 0; i < msgs.size(); i++) {
+				Pane msgPane = new Pane();
+				messagesPane.getStyleClass().add("scrollPaneElement2");
+				msgPane.getStyleClass().add("scrollPaneElement");
+				msgPane.setLayoutY(100 * i);
+				msgPane.setLayoutX(0);
+				Label sender = new Label("From: " + msgs.get(i).getSender());
+				sender.getStyleClass().add("txt");
+				sender.getStyleClass().add("txt3");
+				sender.setLayoutY(10);
+				sender.setLayoutX(40);
+				Label subject = new Label("Subject: " + msgs.get(i).getSubject());
+				subject.getStyleClass().add("txt");
+				subject.getStyleClass().add("txt3");
+				subject.setLayoutY(30);
+				subject.setLayoutX(40);
+				Label content = new Label("Content: " + msgs.get(i).getContent());
+				content.getStyleClass().add("txt");
+				content.getStyleClass().add("txt3");
+				content.setLayoutY(50);
+				content.setLayoutX(40);
+				Label timestamp = new Label("Timestamp: " + msgs.get(i).getTimestamp());
+				timestamp.getStyleClass().add("txt");
+				timestamp.getStyleClass().add("txt3");
+				timestamp.setLayoutY(70);
+				timestamp.setLayoutX(40);
+				msgPane.getChildren().add(sender);
+				msgPane.getChildren().add(subject);
+				msgPane.getChildren().add(content);
+				msgPane.getChildren().add(timestamp);
+				messagesPane.getChildren().add(msgPane);
+			}
+			messagesPane.setPrefHeight(100 * msgs.size());
 		}
 	}
 
@@ -101,7 +234,7 @@ public class Controller {
 			Alert a = new Alert(AlertType.INFORMATION);
             a.setHeaderText("Sign Up Successful!");
             a.setContentText("Account successfully created!"); 
-            a.show();
+            a.showAndWait();
             this.updateDb(this.db);
             this.mainMenuScene(event);
 		}
@@ -117,31 +250,35 @@ public class Controller {
 		td.setHeaderText("Please enter the amount you wish to deposit.");
 		td.setTitle("Deposit");
 		double amount = -1;
-		do {
-		Optional<String> result = td.showAndWait();
-		String am = "";
-		try {
-			if (result.isPresent()) { 
-		    	am = result.get();
-		    	am = am.replace("$", "").trim();
-		    	amount = Double.parseDouble(am);
-			}
-		    if(amount <= 0) {
-				Alert a = new Alert(AlertType.ERROR);
-				a.setContentText("Amount must be greater than 0!"); 
-				a.setHeaderText("Please enter a number greater than 0!");
-				a.showAndWait(); 
-			}
-		} catch(Exception e) {
-		    	Alert a = new Alert(AlertType.ERROR);
-	            a.setContentText("Amount must be a number!"); 
-	            a.setHeaderText("Please enter a number!");
-	            a.showAndWait();
-		  }
-		} while(amount <= 0);
-		double bl = this.db.deposit(amount, this.acc.getUsername());
-		balance.setText("Balance: $ " +bl);
-		this.updateDb(this.db);
+		boolean canceled = false;
+			do {
+				try {
+					Optional<String> result = td.showAndWait();
+					String am = "";
+					if (result.isPresent()) { 
+						am = result.get();
+						am = am.replace("$", "").trim();
+						amount = Double.parseDouble(am);
+						if(amount <= 0) {
+							Alert a = new Alert(AlertType.ERROR);
+							a.setContentText("Amount must be greater than 0!"); 
+							a.setHeaderText("Please enter a number greater than 0!");
+							a.showAndWait(); 
+						} else {
+							double bl = this.db.deposit(amount, this.acc.getUsername());
+							balance.setText("Balance: $" + String.format("%.2f", bl));
+							this.updateDb(this.db);
+						}
+					} else {
+						canceled = true;
+					}
+				} catch(Exception e) {
+					Alert a = new Alert(AlertType.ERROR);
+					a.setContentText("Amount must be a number!"); 
+					a.setHeaderText("Please enter a number!");
+					a.showAndWait();
+				}
+			} while(amount <= 0 && !canceled);
 	}
 	
 	public void withdraw() throws IOException {
@@ -149,34 +286,186 @@ public class Controller {
 		td.setHeaderText("Please enter the amount you wish to withdraw.");
 		td.setTitle("Withdraw");
 		double amount = -1;
+		boolean canceled = false;
 		do {
-		Optional<String> result = td.showAndWait();
-		String am = "";
-		try {
-			if (result.isPresent()) { 
-		    	am = result.get();
-		    	am = am.replace("$", "").trim();
-		    	amount = Double.parseDouble(am);
-			}
-		    if(amount <= 0) {
+			try {
+				Optional<String> result = td.showAndWait();
+				String am = "";
+				if (result.isPresent()) { 
+					am = result.get();
+					am = am.replace("$", "").trim();
+					amount = Double.parseDouble(am);
+					if(amount <= 0) {
+						Alert a = new Alert(AlertType.ERROR);
+						a.setContentText("Amount must be greater than 0!"); 
+						a.setHeaderText("Please enter a number greater than 0!");
+						a.showAndWait(); 
+					} else {
+						if(amount > this.db.getBalance(this.acc.getUsername())) {
+							Alert a = new Alert(AlertType.ERROR);
+							a.setHeaderText("Insufficient Funds!"); 
+							a.setContentText("Amount you wish to withdraw is greater than your balance!");
+							a.showAndWait();
+							amount = -1;
+						} else {
+							double bl = this.db.withdraw(amount, this.acc.getUsername());
+							balance.setText("Balance: $" + String.format("%.2f", bl));
+							this.updateDb(this.db);
+						}
+					}
+				} else {
+					canceled = true;
+				}
+			} catch(Exception e) {
 				Alert a = new Alert(AlertType.ERROR);
-				a.setContentText("Amount must be greater than 0!"); 
-				a.setHeaderText("Please enter a number greater than 0!");
-				a.showAndWait(); 
+				a.setContentText("Amount must be a number!"); 
+				a.setHeaderText("Please enter a number!");
+				a.showAndWait();
 			}
-		} catch(Exception e) {
-		    	Alert a = new Alert(AlertType.ERROR);
-	            a.setContentText("Amount must be a number!"); 
-	            a.setHeaderText("Please enter a number!");
-	            a.showAndWait();
-		  }
-		} while(amount <= 0);
-		double bl = this.db.withdraw(amount, this.acc.getUsername());
-		balance.setText("Balance: $ " + bl);
-		this.updateDb(this.db);
+		} while(amount < 0 && !canceled);
 	}
 	
+	public void editName() throws IOException {
+		TextInputDialog td = new TextInputDialog("$ ");
+		td.setHeaderText("Please enter the name you wish to change to.");
+		td.setTitle("Change Name");
+		boolean canceled = false;
+		boolean changedName = false;
+		do {
+			Optional<String> result = td.showAndWait();
+			String am = "";
+			if (result.isPresent()) { 
+				am = result.get();
+				Alert a = new Alert(AlertType.CONFIRMATION);
+				a.setHeaderText("Change Name!"); 
+				a.setContentText("Are you sure you want to change your name to " + am + "?");
+				Optional<ButtonType> bt = a.showAndWait();
+				if(bt.get() == ButtonType.OK) {
+					changedName = true;
+					this.db.editName(this.acc.getUsername(), am);
+					this.acc.setName(am);
+					this.updateDb(this.db);
+					Alert a1 = new Alert(AlertType.INFORMATION);
+		            a1.setHeaderText("Changed Name Successful!");
+		            a1.setContentText("Change name to " + am + "!"); 
+		            a1.showAndWait();
+				}
+			} else {
+				canceled = true;
+			}
+		} while(!canceled && !changedName);
+	}
+
+	public void editUsername() throws IOException {
+		TextInputDialog td = new TextInputDialog("$ ");
+		td.setHeaderText("Please enter the username you wish to change to.");
+		td.setTitle("Change Name");
+		boolean canceled = false;
+		boolean validUser = false;
+		do {
+			Optional<String> result = td.showAndWait();
+			String am = "";
+			if (result.isPresent()) { 
+				am = result.get();
+				if(this.db.userExists(am)) {
+					Alert a1 = new Alert(AlertType.ERROR);
+	            	a1.setHeaderText("Username already exists!");
+	            	a1.setContentText("The username " + am + " already exists, please try again!"); 
+	            	a1.showAndWait();
+				} else {
+					Alert a = new Alert(AlertType.CONFIRMATION);
+					a.setHeaderText("Change Username!"); 
+					a.setContentText("Are you sure you want to change your username to " + am + "?");
+					Optional<ButtonType> bt = a.showAndWait();
+					if(bt.get() == ButtonType.OK) {
+						validUser = true;
+						this.db.editUsername(this.acc.getUsername(), am);
+						this.acc.setUsername(am);
+						this.updateDb(this.db);
+						Alert a1 = new Alert(AlertType.INFORMATION);
+		            	a1.setHeaderText("Changed username Successful!");
+		            	a1.setContentText("Change usename to " + am + "!"); 
+		            	a1.showAndWait();
+					}
+				}
+			} else {
+				canceled = true;
+			}
+		} while(!canceled && !validUser);
+	}	
 	
+	public void sendTransfer(ActionEvent event) {
+		String to = toTransfer.getText().trim();
+		String am = amountTransfer.getText().trim();
+		double amount = -1;
+		try {
+			amount = Double.parseDouble(am);
+			if(!db.userExists(to)) {
+				Alert a = new Alert(AlertType.ERROR);
+				a.setContentText(to + " does not exist!"); 
+				a.setHeaderText("Please enter a valid username!");
+				a.showAndWait(); 
+			} else if(this.acc.getUsername().equals(to)) {
+				Alert a = new Alert(AlertType.ERROR);
+				a.setContentText("Invalid Transfer!"); 
+				a.setHeaderText("You cannot transfer to yourself!");
+				a.showAndWait(); 
+			} else {
+				if(amount <= 0) {
+					Alert a = new Alert(AlertType.ERROR);
+					a.setContentText("Amount must be greater than 0!"); 
+					a.setHeaderText("Please enter a number greater than 0!");
+					a.showAndWait(); 
+				} else {
+					if(amount > this.db.getBalance(this.acc.getUsername())) {
+						Alert a = new Alert(AlertType.ERROR);
+						a.setHeaderText("Insufficient Funds!"); 
+						a.setContentText("Amount you wish to withdraw is greater than your balance!");
+						a.showAndWait();
+						amount = -1;
+					} else {
+						Alert a = new Alert(AlertType.INFORMATION);
+						this.db.transfer(this.acc.getUsername(), to, amount);
+						this.updateDb(this.db);
+						a.setHeaderText("Transfer Sent!"); 
+						a.setContentText("$" + amount + " was sent to " + to + "!");
+						a.showAndWait();
+						this.mainMenuScene(event);
+					}
+				}
+			}
+		} catch(Exception e) {
+			Alert a = new Alert(AlertType.ERROR);
+			a.setContentText("Amount must be a number!"); 
+			a.setHeaderText("Please enter a number!");
+			a.showAndWait();
+		}
+	}
+	
+	public void sendMessage(ActionEvent event) throws IOException {
+		String to = toMessage.getText().trim();
+		String sb = subjectMessage.getText().trim();
+		String con = contentMessage.getText().trim();
+		if(!db.userExists(to)) {
+			Alert a = new Alert(AlertType.ERROR);
+			a.setContentText(to + " does not exist!"); 
+			a.setHeaderText("Please enter a valid username!");
+			a.showAndWait(); 
+		} else if(this.acc.getUsername().equals(to)) {
+			Alert a = new Alert(AlertType.ERROR);
+			a.setHeaderText("Invalid Message!"); 
+			a.setContentText("You cannot send a message to yourself!");
+			a.showAndWait(); 
+		} else {
+			Alert a = new Alert(AlertType.INFORMATION);
+			this.db.sendMessage(this.acc.getUsername(), to, sb, con);
+			this.updateDb(this.db);
+			a.setHeaderText("Message Sent!"); 
+			a.setContentText("The message was sent to " + to + "!");
+			a.showAndWait();
+			this.mainMenuScene(event);
+		}
+	}
 	
 	// Scene Management
 	public void signUpScene(ActionEvent event) throws IOException {
@@ -210,21 +499,55 @@ public class Controller {
 		stage.setScene(scene);
 	}
 	
-	public void transferScene(ActionEvent event) {
-		
+	public void transferScene(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("transferScene.fxml"));
+		Scene scene = loader.load();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		this.scene = "transfer";
+		Controller cr = loader.getController();
+		cr.initData(this.acc, this.scene);
+		stage.setScene(scene);
 	}
 	
-	public void transactionsScene(ActionEvent event) {
-		
+	public void transactionsScene(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("transactionScene.fxml"));
+		Scene scene = loader.load();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		this.scene = "transactions";
+		Controller cr = loader.getController();
+		cr.initData(this.acc, this.scene);
+		stage.setScene(scene);
 	}
 	
 
-	public void viewMessagesScene(ActionEvent event) {
-		
+	public void viewMessagesScene(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("viewMessagesScene.fxml"));
+		Scene scene = loader.load();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		this.scene = "viewMessages";
+		Controller cr = loader.getController();
+		cr.initData(this.acc, this.scene);
+		stage.setScene(scene);
 	}
 	
-	public void editInfoScene(ActionEvent event) {
-		
+	public void sendMessagesScene(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("sendMessagesScene.fxml"));
+		Scene scene = loader.load();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		this.scene = "sendMessages";
+		Controller cr = loader.getController();
+		cr.initData(this.acc, this.scene);
+		stage.setScene(scene);
+	}
+	
+	public void editInfoScene(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("editInfoScene.fxml"));
+		Scene scene = loader.load();
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		this.scene = "editInfo";
+		Controller cr = loader.getController();
+		cr.initData(this.acc, this.scene);
+		stage.setScene(scene);
 	}
 	
 	/**

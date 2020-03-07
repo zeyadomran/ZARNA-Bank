@@ -65,6 +65,25 @@
     -fx-border-width: 5px;
 }
 
+.scrollPaneFiller {
+    -fx-pref-width: 740px;
+    -fx-max-width: 740px;
+    -fx-background-color: #FAFAFA;
+}
+
+.scrollPaneElement {
+    -fx-pref-width: 740px;
+    -fx-pref-height: 100px;
+    -fx-max-width: 740px;
+    -fx-max-height: 100px;
+    -fx-background-color: #FAFAFA;
+    -fx-cursor: hand;
+}
+
+.scrollPaneElement:hover {
+    -fx-background-color: #CCCCCC;
+}
+
 /* Input Fields */
 .inputField {
     -fx-pref-width: 300px;
@@ -102,6 +121,17 @@
     -fx-pref-width: 150px;
     -fx-pref-height: 50px;
     -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-font: "Helvetica Neue";
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.btnBig2 {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 50px;
+    -fx-max-width: 200px;
     -fx-max-height: 50px;
     -fx-font: "Helvetica Neue";
     -fx-font-size: 20px;
@@ -169,4 +199,15 @@
 .txt2 {
     -fx-font-size: 20px;
     -fx-font-weight: 400;
+}
+
+.txt3 {
+    -fx-font-size: 15px;
+    -fx-font-weight: 400;
+}
+
+/* ScrollPane */
+.scrollPane {
+    -fx-vbar-policy: as-needed;
+    -fx-hbar-policy: never;
 }

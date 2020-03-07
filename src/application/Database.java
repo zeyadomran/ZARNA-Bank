@@ -76,6 +76,23 @@ public class Database {
 		return this.accounts.get(getUserIndex(uN)).getBalance();
 	}
 	
+	public ArrayList<Transaction> getTransactions(String uN) {
+		return new ArrayList<Transaction>(accounts.get(getUserIndex(uN)).getLog());
+	}
+	
+	public ArrayList<Message> getMessages(String uN) {
+		return new ArrayList<Message>(accounts.get(getUserIndex(uN)).getMessages());
+	}
+	
+	public void editName(String uN, String nN) {
+		accounts.get(getUserIndex(uN)).setName(nN);
+	}
+	
+	public void editUsername(String uN, String nN) {
+		accounts.get(getUserIndex(uN)).setUsername(nN);
+	}
+
+	
 	/**
 	 * Finds the index of an account within the accounts list
 	 * 
@@ -123,15 +140,9 @@ public class Database {
 	 * @return -2 -> user does not exist
 	 * @return -3 -> sending transfer to yourself
 	 */
-	public int transfer(String fr, String to, double amount) {
-		boolean state;
-		if(!userExists(to)) return -2;
-		if(fr.equals(to)) return -3;
-		if(!(amount > 0)) return -1;
-		state = accounts.get(getUserIndex(fr)).withdraw(amount, to);
-		if(!state) return 0;
+	public void transfer(String fr, String to, double amount) {
+		accounts.get(getUserIndex(fr)).withdraw(amount, to);
 		accounts.get(getUserIndex(to)).deposit(amount, fr);
-		return 1;
 	}
 
 	/**
@@ -162,10 +173,7 @@ public class Database {
 	 * 
 	 * @return returns 1 if message is successful, 0 if user is sending message to himself and -1 if the reciever does not exist.
 	 */
-	public int sendMessage(String fr, String to, String sub, String con) {
-		if(!userExists(to)) return -1;
-		if(fr.equals(to)) return 0;
+	public void sendMessage(String fr, String to, String sub, String con) {
 		accounts.get(getUserIndex(to)).addMessage(fr, to, sub, con);
-		return 1;
 	}
 }
