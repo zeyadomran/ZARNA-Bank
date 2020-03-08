@@ -1,0 +1,213 @@
+/* Main Body */
+.mainBody {
+    -fx-pref-width: 800px;
+    -fx-pref-height: 600px;
+    -fx-max-width: 800px;
+    -fx-max-height: 600px;
+    -fx-background-color: #78B9F5;
+}
+
+/* header */
+.header {
+    -fx-pref-width: 800px;
+    -fx-pref-height: 100px;
+    -fx-max-width: 800px;
+    -fx-max-height: 100px;
+    -fx-background-color: #5BA4E8;
+    -fx-padding: 5px;
+}
+
+/* Logos */
+.logoWhite {
+    -fx-graphic: url(../img/ZARNA-Logo.png);
+    -fx-pref-width: 80px;
+    -fx-pref-height: 80px;
+    -fx-max-width: 80px;
+    -fx-max-height: 80px;
+}
+
+.logoBlack {
+    -fx-graphic: url(../img/ZARNA-Logo-Black.png);
+    -fx-pref-width: 80px;
+    -fx-pref-height: 80px;
+    -fx-max-width: 80px;
+    -fx-max-height: 80px;
+}
+
+/* Containers */
+.loginContainer {
+    -fx-pref-width: 400px;
+    -fx-pref-height: 300px;
+    -fx-max-width: 400px;
+    -fx-max-height: 300px;
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #5BA4E8;
+    -fx-border-width: 5px;
+}
+
+.signUpContainer {
+    -fx-pref-width: 750px;
+    -fx-pref-height: 300px;
+    -fx-max-width: 750px;
+    -fx-max-height: 300px;
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #5BA4E8;
+    -fx-border-width: 5px;
+}
+
+.mainMenuContainer {
+    -fx-pref-width: 750px;
+    -fx-pref-height: 300px;
+    -fx-max-width: 750px;
+    -fx-max-height: 300px;
+    -fx-background-color: #FAFAFA;
+    -fx-border-color: #5BA4E8;
+    -fx-border-width: 5px;
+}
+
+.scrollPaneFiller {
+    -fx-pref-width: 740px;
+    -fx-max-width: 740px;
+    -fx-background-color: #FAFAFA;
+}
+
+.scrollPaneElement {
+    -fx-pref-width: 740px;
+    -fx-pref-height: 100px;
+    -fx-max-width: 740px;
+    -fx-max-height: 100px;
+    -fx-background-color: #FAFAFA;
+    -fx-cursor: hand;
+}
+
+.scrollPaneElement:hover {
+    -fx-background-color: #CCCCCC;
+}
+
+/* Input Fields */
+.inputField {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 50px;
+    -fx-max-width: 300px;
+    -fx-max-height: 50px;
+    -fx-border-color: #DDDDDD;
+    -fx-border-radius: 0px;
+    -fx-background-color: #EEEEEE;
+    -fx-font: "Helvetica Neue";
+    -fx-font-size: 30px;
+}
+
+.inputField:focus {
+    -fx-border-color: #5BA4E8;
+}
+
+.inputFieldInvalid {
+    -fx-border-color: #D82636;
+}
+
+/* Buttons */
+.btn {
+    -fx-pref-width: 125px;
+    -fx-pref-height: 50px;
+    -fx-max-width: 125px;
+    -fx-max-height: 50px;
+    -fx-font: "Helvetica Neue";
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.btnBig {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-font: "Helvetica Neue";
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.btnBig2 {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 50px;
+    -fx-max-width: 200px;
+    -fx-max-height: 50px;
+    -fx-font: "Helvetica Neue";
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.btn1 {
+    -fx-background-color: #6AE49F;
+}
+
+.btn1:hover {
+    -fx-background-color: #31DF7C;
+    -fx-text-fill: #FFFFFF;
+}
+
+.btn1:focus {
+    -fx-background-color: #31DF7C;
+    -fx-text-fill: #FFFFFF;
+}
+
+.btn2 {
+    -fx-background-color: #5BA4E8;
+}
+
+.btn2:hover {
+    -fx-background-color: #2487E4;
+    -fx-text-fill: #FFFFFF;
+}
+
+.btn2:focus {
+    -fx-background-color: #2487E4;
+    -fx-text-fill: #FFFFFF;
+}
+
+.btn3 {
+    -fx-background-color: #D34753;
+}
+
+.btn3:hover {
+    -fx-background-color: #D82636;
+    -fx-text-fill: #FFFFFF;
+}
+
+.btn3:focus {
+    -fx-background-color: #D82636;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Text Styles */
+.txt {
+    -fx-font: "Helvetica Neue";
+    -fx-text-fill: #000000;
+}
+
+.txtW {
+    -fx-text-fill: #FFFFFF;
+}
+
+.txt1 {
+    -fx-font-size: 40px;
+    -fx-font-weight: 700;
+}
+
+.txt2 {
+    -fx-font-size: 20px;
+    -fx-font-weight: 400;
+}
+
+.txt3 {
+    -fx-font-size: 15px;
+    -fx-font-weight: 400;
+}
+
+/* ScrollPane */
+.scrollPane {
+    -fx-vbar-policy: as-needed;
+    -fx-hbar-policy: never;
+}

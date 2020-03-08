@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Scene xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+    <AnchorPane prefHeight="200" prefWidth="200" styleClass="mainBody" stylesheets="@../resources/css/style.css">
+      <children>
+         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="header">
+            <children>
+               <Label layoutX="360.0" layoutY="10.0" styleClass="logoWhite" />
+            </children>
+         </Pane>
+         <Pane layoutX="25.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" styleClass="mainMenuContainer">
+            <children>
+               <Button defaultButton="true" layoutX="137.0" layoutY="230.0" mnemonicParsing="false" onAction="#sendMessage" text="Send Message">
+                  <styleClass>
+                     <String fx:value="btnBig2" />
+                     <String fx:value="btn1" />
+                  </styleClass>
+               </Button>
+               <Button layoutX="402.0" layoutY="230.0" mnemonicParsing="false" onAction="#mainMenuScene" text="Cancel">
+                  <styleClass>
+                     <String fx:value="btnBig" />
+                     <String fx:value="btn3" />
+                  </styleClass>
+               </Button>
+               <TextField fx:id="fromMessage" editable="false" layoutX="37.0" layoutY="30.0" promptText="From:" styleClass="inputField" />
+               <TextField fx:id="toMessage" layoutX="402.0" layoutY="30.0" promptText="To:" styleClass="inputField" />
+               <TextField fx:id="subjectMessage" layoutX="37.0" layoutY="121.0" promptText="Subject:" styleClass="inputField" />
+               <TextField fx:id="contentMessage" layoutX="402.0" layoutY="121.0" promptText="Content:" styleClass="inputField" />
+            </children>
+         </Pane>
+      </children></AnchorPane>
+</Scene>
