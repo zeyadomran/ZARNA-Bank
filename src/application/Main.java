@@ -10,11 +10,11 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			primaryStage.setTitle("ZARNA Bank");
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("loginScene.fxml")); 
+			primaryStage.setTitle("ZARNA Bank");  // set title of stage
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("loginScene.fxml"));  // loads the first scene
 			Scene scene = loader.load();
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			primaryStage.setScene(scene); // sets the scene
+			primaryStage.show(); // shows the stage
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

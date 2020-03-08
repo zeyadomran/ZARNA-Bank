@@ -64,30 +64,38 @@ public class Database {
 		return -1;
 	}
 	
+	
+	// deposits money into account
 	public double deposit(double amount, String uN) {
 		return this.accounts.get(getUserIndex(uN)).deposit(amount);
 	}
 	
+	// withdraws money from account
 	public double withdraw(double amount, String uN) {
 		return this.accounts.get(getUserIndex(uN)).withdraw(amount);
 	}
 	
+	// gets account balance
 	public double getBalance(String uN) {
 		return this.accounts.get(getUserIndex(uN)).getBalance();
 	}
 	
+	// gets all the transactions from account
 	public ArrayList<Transaction> getTransactions(String uN) {
 		return new ArrayList<Transaction>(accounts.get(getUserIndex(uN)).getLog());
 	}
 	
+	// gets all the messages from account
 	public ArrayList<Message> getMessages(String uN) {
 		return new ArrayList<Message>(accounts.get(getUserIndex(uN)).getMessages());
 	}
 	
+	// Edits the account's name
 	public void editName(String uN, String nN) {
 		accounts.get(getUserIndex(uN)).setName(nN);
 	}
 	
+	// edits the account username
 	public void editUsername(String uN, String nN) {
 		accounts.get(getUserIndex(uN)).setUsername(nN);
 	}

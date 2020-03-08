@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 
 public class Controller {
 	
+	//  Instance Variables
 	private Database db;
 	private Account acc = null;
 	private String scene = "login";
@@ -69,10 +70,12 @@ public class Controller {
 	@FXML private TextField subjectMessage;
 	@FXML private TextField contentMessage;
 
+	// Controller Constructor, loads the DB
 	public Controller() throws FileNotFoundException, IOException, ParseException {
 		this.db = loadDb();
 	}
 	
+	// Funtction to initialize the controller and to manage scene data
 	public void initData(Account ac, String sc) {
 		this.acc = ac;
 		this.scene = sc;
@@ -100,6 +103,7 @@ public class Controller {
 		}
 	}
 	
+	// function to load transactions into scroll pane
 	public void loadTransactions() {
 		ArrayList<Transaction> trans = this.db.getTransactions(this.acc.getUsername());
 		if(trans.size() < 1) {
@@ -151,6 +155,7 @@ public class Controller {
 		}
 	}
 	
+	// function to load messages to scroll pane
 	public void loadMessages() {
 		ArrayList<Message> msgs = this.db.getMessages(this.acc.getUsername());
 		if(msgs.size() < 1) {
@@ -202,6 +207,7 @@ public class Controller {
 		}
 	}
 
+	// function to login
 	public void login(ActionEvent event) throws IOException {
 		this.acc = this.db.login(userLogin.getText(), passLogin.getText());
 		if(this.acc == null) {
@@ -216,6 +222,7 @@ public class Controller {
 		}
 	}
 	
+	// function to create account
 	public void createAccount(ActionEvent event) throws IOException {
 		String username = userSignUp.getText();
 		String name = nameSignUp.getText();
@@ -240,11 +247,13 @@ public class Controller {
 		}
 	}
 	
+	// function to logout
 	public void logout(ActionEvent event) throws IOException {
 		this.acc = null;
 		this.loginScene(event);
 	}
 	
+	//  function to deposit
 	public void deposit() throws IOException {
 		TextInputDialog td = new TextInputDialog("$ ");
 		td.setHeaderText("Please enter the amount you wish to deposit.");
@@ -281,6 +290,7 @@ public class Controller {
 			} while(amount <= 0 && !canceled);
 	}
 	
+	// function to withdraw
 	public void withdraw() throws IOException {
 		TextInputDialog td = new TextInputDialog("$ ");
 		td.setHeaderText("Please enter the amount you wish to withdraw.");
@@ -325,6 +335,7 @@ public class Controller {
 		} while(amount < 0 && !canceled);
 	}
 	
+	// function to edit name
 	public void editName() throws IOException {
 		TextInputDialog td = new TextInputDialog("$ ");
 		td.setHeaderText("Please enter the name you wish to change to.");
@@ -356,6 +367,7 @@ public class Controller {
 		} while(!canceled && !changedName);
 	}
 
+	// function to edit username
 	public void editUsername() throws IOException {
 		TextInputDialog td = new TextInputDialog("$ ");
 		td.setHeaderText("Please enter the username you wish to change to.");
@@ -394,6 +406,7 @@ public class Controller {
 		} while(!canceled && !validUser);
 	}	
 	
+	// function to transfer money
 	public void sendTransfer(ActionEvent event) {
 		String to = toTransfer.getText().trim();
 		String am = amountTransfer.getText().trim();
@@ -442,6 +455,7 @@ public class Controller {
 		}
 	}
 	
+	// function to send messages
 	public void sendMessage(ActionEvent event) throws IOException {
 		String to = toMessage.getText().trim();
 		String sb = subjectMessage.getText().trim();
@@ -468,6 +482,7 @@ public class Controller {
 	}
 	
 	// Scene Management
+	// loads the signup scene
 	public void signUpScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("signUpScene.fxml"));
 		Scene scene = loader.load();
@@ -479,6 +494,7 @@ public class Controller {
 		
 	}
 	
+	// function to load the main menu scene
 	public void mainMenuScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("mainMenuScene.fxml"));
 		Scene scene = loader.load();
@@ -489,6 +505,7 @@ public class Controller {
 		stage.setScene(scene);
 	}
 	
+	// function to load the login scene
 	public void loginScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("loginScene.fxml"));
 		Scene scene = loader.load();
@@ -499,6 +516,7 @@ public class Controller {
 		stage.setScene(scene);
 	}
 	
+	// function to load the transfer scene
 	public void transferScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("transferScene.fxml"));
 		Scene scene = loader.load();
@@ -509,6 +527,7 @@ public class Controller {
 		stage.setScene(scene);
 	}
 	
+	// function to load the transactions scene
 	public void transactionsScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("transactionScene.fxml"));
 		Scene scene = loader.load();
@@ -519,7 +538,7 @@ public class Controller {
 		stage.setScene(scene);
 	}
 	
-
+	// function to load the view messages scene
 	public void viewMessagesScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("viewMessagesScene.fxml"));
 		Scene scene = loader.load();
@@ -530,6 +549,7 @@ public class Controller {
 		stage.setScene(scene);
 	}
 	
+	// function to load the send messages scene
 	public void sendMessagesScene(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("sendMessagesScene.fxml"));
 		Scene scene = loader.load();
@@ -611,7 +631,7 @@ public class Controller {
     	if(!exists) { // checks if the file does not exist to prevent error and creates it
     		FileWriter fw=new FileWriter("Database.json"); // create Database.json file and allows us to overwrite it
     		PrintWriter pw = new PrintWriter(fw); // prints text to file
-    		pw.write("{\"loggedIn\":{},\"accounts\":[]}"); // print JSON string to file
+    		pw.write("{\"accounts\":[]}"); // print JSON string to file
             pw.flush(); 
             pw.close(); 
     	}
