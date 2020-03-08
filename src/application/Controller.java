@@ -214,7 +214,7 @@ public class Controller {
 			Alert a = new Alert(AlertType.ERROR);
             a.setContentText("Username / Password is incorrect!"); 
             a.setHeaderText("Login Failed!");
-            a.show(); 
+            a.showAndWait(); 
 			userLogin.getStyleClass().add("inputFieldInvalid");
 			passLogin.getStyleClass().add("inputFieldInvalid");
 		} else {
@@ -228,13 +228,19 @@ public class Controller {
 		String name = nameSignUp.getText();
 		String password = passSignUp.getText();
 		String cpassword = cPassSignUp.getText();
-		if(!password.equals(cpassword)) {
+		if(!password.equals(cpassword) || password.equals("")) {
 			Alert a = new Alert(AlertType.ERROR);
             a.setContentText("Passwords do not match!"); 
             a.setHeaderText("Sign Up Failed!");
-            a.show(); 
+            a.showAndWait(); 
             passSignUp.getStyleClass().add("inputFieldInvalid");
             cPassSignUp.getStyleClass().add("inputFieldInvalid");
+		} else if(db.userExists(username)) {
+			Alert a = new Alert(AlertType.ERROR);
+            a.setContentText("Username already exists!"); 
+            a.setHeaderText("Try again with a different username");
+            a.showAndWait(); 
+            userSignUp.getStyleClass().add("inputFieldInvalid");
 		} else {
 			this.acc = new Account(username, name, password);
 			this.db.addUser(this.acc, password);
