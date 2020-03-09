@@ -3,7 +3,7 @@ package application;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
-public class MultiUserInteraction {
+public abstract class MultiUserInteraction {
 	
 	private String from;
 	private String to;
