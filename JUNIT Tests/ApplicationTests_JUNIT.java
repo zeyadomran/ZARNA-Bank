@@ -2,6 +2,8 @@ package application;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 
 public class ApplicationTests_JUNIT {
@@ -138,7 +140,20 @@ public class ApplicationTests_JUNIT {
 		assertEquals("Multiple Transactions Test:",expected,actual,0.0000000001);
 	}
 	
-	
+	//Add Message Test
+	@Test
+	public void addMessageTest() {
+		acc.addMessage("fr", "to", "sub", "content of the message"); //Adds Message
+		assertEquals("Add Message, Checking Array Size:",1,acc.getMessages().size()); //Ensures the message was added to the ArrayList
+		
+		ArrayList<Message> messages = acc.getMessages();//Variable used for future tests, represents messageList after adding the message
+		
+		//Tests message contents
+		assertEquals("Add Message, Checking Contents, From:","fr",messages.get(0).getSender());
+		assertEquals("Add Message, Checking Contents, To:","to",messages.get(0).getReciever());
+		assertEquals("Add Message, Checking Contents, Subject:","sub",messages.get(0).getSubject());
+		assertEquals("Add Message, Checking Contents, Content:","content of the message",messages.get(0).getContent());
+	}
 	
 	
 }

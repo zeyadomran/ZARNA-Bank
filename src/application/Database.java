@@ -55,7 +55,7 @@ public class Database {
 	 * @param userId -> The ID of the user you are looking for
 	 * @return The index of the user within accounts, or -1 if the account is not found
 	 */
-	private int getUserIndex(String username) {
+	public int getUserIndex(String username) {
 		for (int i = 0; i < accounts.size(); i++) {
 			if (accounts.get(i).getUsername().equals(username)) {
 				return i;
@@ -117,7 +117,9 @@ public class Database {
 	 * @param username -> the username of the account to delete
 	 */
 	public void removeUser(String username) {
-		accounts.remove(getUserIndex(username));
+		int index = this.getUserIndex(username);
+		if(index != -1)
+			accounts.remove(index);
 	}
 
 	/**
