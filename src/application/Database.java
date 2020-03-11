@@ -117,7 +117,9 @@ public class Database {
 	 * @param username -> the username of the account to delete
 	 */
 	public void removeUser(String username) {
-		accounts.remove(getUserIndex(username));
+		int index = this.getUserIndex(username);
+		if(index != -1)
+			accounts.remove(index);
 	}
 
 	/**
