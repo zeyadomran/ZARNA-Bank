@@ -32,6 +32,14 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import application.backend.Account;
+import application.backend.Database;
+import application.backend.Message;
+import application.backend.Transaction;
+
+import application.components.TransactionPane;
+import application.components.MessagesPane;
+
 public class Controller {
 	
 	//  Instance Variables
@@ -120,35 +128,11 @@ public class Controller {
 			transactionPane.getChildren().add(transPane);
 		} else {
 			for(int i = 0; i < trans.size(); i++) {
-				Pane transPane = new Pane();
+				TransactionPane transPane = new TransactionPane(trans.get(i).getType(), trans.get(i).getNote(), trans.get(i).getAmount(), trans.get(i).getTimestamp());
 				transactionPane.getStyleClass().add("scrollPaneElement2");
 				transPane.getStyleClass().add("scrollPaneElement");
 				transPane.setLayoutY(100 * i);
 				transPane.setLayoutX(0);
-				Label type = new Label("Type: " + trans.get(i).getType());
-				type.getStyleClass().add("txt");
-				type.getStyleClass().add("txt3");
-				type.setLayoutY(10);
-				type.setLayoutX(40);
-				Label note = new Label("Note: " + trans.get(i).getNote());
-				note.getStyleClass().add("txt");
-				note.getStyleClass().add("txt3");
-				note.setLayoutY(30);
-				note.setLayoutX(40);
-				Label amount = new Label("Amount: " + trans.get(i).getAmount());
-				amount.getStyleClass().add("txt");
-				amount.getStyleClass().add("txt3");
-				amount.setLayoutY(50);
-				amount.setLayoutX(40);
-				Label timestamp = new Label("Timestamp: " + trans.get(i).getTimestamp());
-				timestamp.getStyleClass().add("txt");
-				timestamp.getStyleClass().add("txt3");
-				timestamp.setLayoutY(70);
-				timestamp.setLayoutX(40);
-				transPane.getChildren().add(type);
-				transPane.getChildren().add(note);
-				transPane.getChildren().add(amount);
-				transPane.getChildren().add(timestamp);
 				transactionPane.getChildren().add(transPane);
 			}
 			transactionPane.setPrefHeight(100 * trans.size());
@@ -172,35 +156,11 @@ public class Controller {
 			messagesPane.getChildren().add(msgPane);
 		} else {
 			for(int i = 0; i < msgs.size(); i++) {
-				Pane msgPane = new Pane();
+				MessagesPane msgPane = new MessagesPane(msgs.get(i).getSender(), msgs.get(i).getSubject(), msgs.get(i).getContent(), msgs.get(i).getTimestamp());
 				messagesPane.getStyleClass().add("scrollPaneElement2");
 				msgPane.getStyleClass().add("scrollPaneElement");
 				msgPane.setLayoutY(100 * i);
 				msgPane.setLayoutX(0);
-				Label sender = new Label("From: " + msgs.get(i).getSender());
-				sender.getStyleClass().add("txt");
-				sender.getStyleClass().add("txt3");
-				sender.setLayoutY(10);
-				sender.setLayoutX(40);
-				Label subject = new Label("Subject: " + msgs.get(i).getSubject());
-				subject.getStyleClass().add("txt");
-				subject.getStyleClass().add("txt3");
-				subject.setLayoutY(30);
-				subject.setLayoutX(40);
-				Label content = new Label("Content: " + msgs.get(i).getContent());
-				content.getStyleClass().add("txt");
-				content.getStyleClass().add("txt3");
-				content.setLayoutY(50);
-				content.setLayoutX(40);
-				Label timestamp = new Label("Timestamp: " + msgs.get(i).getTimestamp());
-				timestamp.getStyleClass().add("txt");
-				timestamp.getStyleClass().add("txt3");
-				timestamp.setLayoutY(70);
-				timestamp.setLayoutX(40);
-				msgPane.getChildren().add(sender);
-				msgPane.getChildren().add(subject);
-				msgPane.getChildren().add(content);
-				msgPane.getChildren().add(timestamp);
 				messagesPane.getChildren().add(msgPane);
 			}
 			messagesPane.setPrefHeight(100 * msgs.size());
@@ -589,19 +549,19 @@ public class Controller {
     	for(int i = 0; i < acc.size(); i++) { // loop through accounts
         	Map accInfo = new LinkedHashMap(7); // save this instance's information
     		Account cAcc = acc.get(i);
-    		accInfo.put("username", cAcc.getUsername()); // get information and save it in JSON string
-    		accInfo.put("name", cAcc.getName());
-    		accInfo.put("password", cAcc.getPassword());
-    		accInfo.put("balance", cAcc.getBalance());
+    		accInfo.put("username", this.encrypt(cAcc.getUsername())); // get information and save it in JSON string
+    		accInfo.put("name", this.encrypt(cAcc.getName()));
+    		accInfo.put("password", this.encrypt(cAcc.getPassword()));
+    		accInfo.put("balance", this.encrypt("" + cAcc.getBalance()));
     		JSONArray msgList = new JSONArray(); // JSON array that holds all the messages for this instance account
     		ArrayList <Message> msgs = cAcc.getMessages();
     		for(Message msg : msgs) { // loop through messages
         		Map msgInfo = new LinkedHashMap(5);
-    			msgInfo.put("from", msg.getSender());
-    			msgInfo.put("to", msg.getReciever());
-    			msgInfo.put("subject", msg.getSubject());
-    			msgInfo.put("content", msg.getContent());
-    			msgInfo.put("ts", msg.getTimestamp());
+    			msgInfo.put("from", this.encrypt(msg.getSender()));
+    			msgInfo.put("to", this.encrypt(msg.getReciever()));
+    			msgInfo.put("subject", this.encrypt(msg.getSubject()));
+    			msgInfo.put("content", this.encrypt(msg.getContent()));
+    			msgInfo.put("ts", this.encrypt(msg.getTimestamp()));
     			msgList.add(msgInfo);
     		}
     		accInfo.put("messages", msgList);
@@ -609,10 +569,10 @@ public class Controller {
     		ArrayList <Transaction> trans = cAcc.getLog();
     		for(Transaction tran : trans) { // loop through transactions
         		Map tranInfo = new LinkedHashMap(4);
-    			tranInfo.put("type", tran.getType());
-    			tranInfo.put("note", tran.getNote());
-    			tranInfo.put("amount", tran.getAmount());
-    			tranInfo.put("ts", tran.getTimestamp());
+    			tranInfo.put("type", this.encrypt(tran.getType()));
+    			tranInfo.put("note", this.encrypt(tran.getNote()));
+    			tranInfo.put("amount", this.encrypt("" + tran.getAmount()));
+    			tranInfo.put("ts", this.encrypt(tran.getTimestamp()));
     			tranList.add(tranInfo);
     		}
     		accInfo.put("log", tranList);
@@ -648,14 +608,22 @@ public class Controller {
     	Iterator<JSONObject> itr1 = accList.iterator(); // creates an iterator to go through the object
     	while(itr1.hasNext()) { // loops through all accounts
     		JSONObject acc = itr1.next();
+    		String username = (String) acc.get("username"), 
+    					name = (String) acc.get("name"), 
+    					password = (String) acc.get("password");
     		ArrayList <Message> msgs = new ArrayList<Message>();
     		ArrayList <Transaction> trans = new ArrayList<Transaction>();
-    		Account nAcc = new Account((String) acc.get("username"), (String) acc.get("name"), (String) acc.get("password")); // create new account
+    		Account nAcc = new Account(decrypt(username), decrypt(name), decrypt(password)); // create new account
     		JSONArray msgList = (JSONArray) acc.get("messages");
     		Iterator<JSONObject> itr2 = msgList.iterator();
     		while(itr2.hasNext()) { // loop through messages
     			JSONObject msg = itr2.next();
-    			Message nMsg = new Message((String) msg.get("from"), (String) msg.get("to"), (String) msg.get("subject"), (String) msg.get("content"), (String) msg.get("ts")); // creates new message
+    			String from = (String) msg.get("from"), 
+    						to = (String) msg.get("to"), 
+    						subject = (String) msg.get("subject"), 
+    						content = (String) msg.get("content"), 
+    						ts = (String) msg.get("ts");
+    			Message nMsg = new Message(decrypt(from), decrypt(to), decrypt(subject), decrypt(content), decrypt(ts)); // creates new message
     			msgs.add(nMsg);
     		}
     		nAcc.setMessages(msgs);
@@ -663,13 +631,83 @@ public class Controller {
     		Iterator<JSONObject> itr3 = tranList.iterator();
     		while(itr3.hasNext()) { // loop through transactions
     			JSONObject tran = itr3.next();
-    			Transaction nTran = new Transaction((String) tran.get("type"), (String) tran.get("note"), (double) tran.get("amount"), (String) tran.get("ts")); // create new transaction
+    			double amount = Double.parseDouble((String) tran.get("amount"));
+    			Transaction nTran = new Transaction( decrypt((String) tran.get("type")),  decrypt((String) tran.get("note")), Double.parseDouble(decrypt("" + amount)), decrypt((String) tran.get("ts"))); // create new transaction
     			trans.add(nTran);
     		}
     		nAcc.setTransactions(trans);
-    		nAcc.setBalance((double) acc.get("balance"));
-    		db.addUser(nAcc, (String) acc.get("password"));
+    		double balance = Double.parseDouble((String) acc.get("balance"));
+    		nAcc.setBalance(Double.parseDouble(decrypt("" + balance)));
+    		db.addUser(nAcc, decrypt((String) acc.get("password")));
     	}
     	return db; // return db, will always return a valid db
     }
+    
+    public String encrypt(String s) {
+		char [] upperCase = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+		char []	lowerCase = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+		char [] numbers = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+		int encryptBy = s.length();
+		String encrypted = "";
+		
+		for(int i = 0; i < s.length(); i++) {
+			boolean success = false;
+			for(int j = 0; j < upperCase.length; j++) {
+				if(s.charAt(i) == upperCase[j]) {
+					encrypted += upperCase [(j + encryptBy) % 26];
+					success = true;
+				}
+			}
+			for(int h = 0; h < lowerCase.length; h++) {
+				if(s.charAt(i) == lowerCase[h]) {
+					encrypted += lowerCase [(h + encryptBy) % 26];
+					success = true;
+				}
+			}
+			for(int j = 0; j < numbers.length; j++) {
+				if(s.charAt(i) == numbers[j]) {
+					encrypted += numbers [(j + encryptBy) % 10];
+					success = true;
+				}
+			}
+			if(!success) {
+				encrypted += s.charAt(i);
+			}
+		}
+		return encrypted;
+	}
+	
+	public static String decrypt(String s) {
+		char [] upperCase = {'Z' , 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+		char []	lowerCase = {'z' , 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'};
+		char [] numbers = { '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'};
+		int decryptBy = s.length();
+		String decrypted = "";
+		
+		for(int i = 0; i < s.length(); i++) {
+			boolean success = false;
+			for(int j = 0; j < upperCase.length; j++) {
+				if(s.charAt(i) == upperCase[j]) {
+					decrypted += upperCase [(j + decryptBy) % 26];
+					success = true;
+				}
+			}
+			for(int h = 0; h < lowerCase.length; h++) {
+				if(s.charAt(i) == lowerCase[h]) {
+					decrypted += lowerCase [(h + decryptBy) % 26];
+					success = true;
+				}
+			}
+			for(int j = 0; j < numbers.length; j++) {
+				if(s.charAt(i) == numbers[j]) {
+					decrypted += numbers [(j + decryptBy) % 10];
+					success = true;
+				}
+			}
+			if(!success) {
+				decrypted += s.charAt(i);
+			}
+		}
+		return decrypted;
+	}
 }

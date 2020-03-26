@@ -1,4 +1,4 @@
-package application;
+package application.backend;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class Database {
 	 * 
 	 * @param id -> ID of the database
 	 */
-	Database() {
+	public Database() {
 		//this.id = id;
 		accounts = new ArrayList<Account>();
 	}
@@ -28,7 +28,7 @@ public class Database {
 	 * 
 	 * @param db -> the database to copy
 	 */
-	Database(Database db) {
+	public Database(Database db) {
 		//this.id = db.id;
 		this.accounts = copyAccountsList(db.accounts);
 	}
@@ -55,7 +55,7 @@ public class Database {
 	 * @param userId -> The ID of the user you are looking for
 	 * @return The index of the user within accounts, or -1 if the account is not found
 	 */
-	public int getUserIndex(String username) {
+	private int getUserIndex(String username) {
 		for (int i = 0; i < accounts.size(); i++) {
 			if (accounts.get(i).getUsername().equals(username)) {
 				return i;
@@ -117,9 +117,7 @@ public class Database {
 	 * @param username -> the username of the account to delete
 	 */
 	public void removeUser(String username) {
-		int index = this.getUserIndex(username);
-		if(index != -1)
-			accounts.remove(index);
+		accounts.remove(getUserIndex(username));
 	}
 
 	/**

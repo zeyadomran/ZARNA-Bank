@@ -1,4 +1,4 @@
-package application;
+package application.backend;
 
 import java.util.ArrayList;
 
@@ -224,10 +224,6 @@ public class Account {
 	 * @return 0 -> balance less than amount             
 	 */
 	public double withdraw(double amount) {
-		if (amount < 0) {
-			amount *= -1;
-		}
-		
 		if (amount > this.getBalance()) {
 			return this.balance;
 		} else {
