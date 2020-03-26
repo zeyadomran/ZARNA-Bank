@@ -32,6 +32,14 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import application.backend.Account;
+import application.backend.Database;
+import application.backend.Message;
+import application.backend.Transaction;
+
+import application.components.TransactionPane;
+import application.components.MessagesPane;
+
 public class Controller {
 	
 	//  Instance Variables
@@ -120,35 +128,11 @@ public class Controller {
 			transactionPane.getChildren().add(transPane);
 		} else {
 			for(int i = 0; i < trans.size(); i++) {
-				Pane transPane = new Pane();
+				TransactionPane transPane = new TransactionPane(trans.get(i).getType(), trans.get(i).getNote(), trans.get(i).getAmount(), trans.get(i).getTimestamp());
 				transactionPane.getStyleClass().add("scrollPaneElement2");
 				transPane.getStyleClass().add("scrollPaneElement");
 				transPane.setLayoutY(100 * i);
 				transPane.setLayoutX(0);
-				Label type = new Label("Type: " + trans.get(i).getType());
-				type.getStyleClass().add("txt");
-				type.getStyleClass().add("txt3");
-				type.setLayoutY(10);
-				type.setLayoutX(40);
-				Label note = new Label("Note: " + trans.get(i).getNote());
-				note.getStyleClass().add("txt");
-				note.getStyleClass().add("txt3");
-				note.setLayoutY(30);
-				note.setLayoutX(40);
-				Label amount = new Label("Amount: " + trans.get(i).getAmount());
-				amount.getStyleClass().add("txt");
-				amount.getStyleClass().add("txt3");
-				amount.setLayoutY(50);
-				amount.setLayoutX(40);
-				Label timestamp = new Label("Timestamp: " + trans.get(i).getTimestamp());
-				timestamp.getStyleClass().add("txt");
-				timestamp.getStyleClass().add("txt3");
-				timestamp.setLayoutY(70);
-				timestamp.setLayoutX(40);
-				transPane.getChildren().add(type);
-				transPane.getChildren().add(note);
-				transPane.getChildren().add(amount);
-				transPane.getChildren().add(timestamp);
 				transactionPane.getChildren().add(transPane);
 			}
 			transactionPane.setPrefHeight(100 * trans.size());
@@ -172,35 +156,11 @@ public class Controller {
 			messagesPane.getChildren().add(msgPane);
 		} else {
 			for(int i = 0; i < msgs.size(); i++) {
-				Pane msgPane = new Pane();
+				MessagesPane msgPane = new MessagesPane(msgs.get(i).getSender(), msgs.get(i).getSubject(), msgs.get(i).getContent(), msgs.get(i).getTimestamp());
 				messagesPane.getStyleClass().add("scrollPaneElement2");
 				msgPane.getStyleClass().add("scrollPaneElement");
 				msgPane.setLayoutY(100 * i);
 				msgPane.setLayoutX(0);
-				Label sender = new Label("From: " + msgs.get(i).getSender());
-				sender.getStyleClass().add("txt");
-				sender.getStyleClass().add("txt3");
-				sender.setLayoutY(10);
-				sender.setLayoutX(40);
-				Label subject = new Label("Subject: " + msgs.get(i).getSubject());
-				subject.getStyleClass().add("txt");
-				subject.getStyleClass().add("txt3");
-				subject.setLayoutY(30);
-				subject.setLayoutX(40);
-				Label content = new Label("Content: " + msgs.get(i).getContent());
-				content.getStyleClass().add("txt");
-				content.getStyleClass().add("txt3");
-				content.setLayoutY(50);
-				content.setLayoutX(40);
-				Label timestamp = new Label("Timestamp: " + msgs.get(i).getTimestamp());
-				timestamp.getStyleClass().add("txt");
-				timestamp.getStyleClass().add("txt3");
-				timestamp.setLayoutY(70);
-				timestamp.setLayoutX(40);
-				msgPane.getChildren().add(sender);
-				msgPane.getChildren().add(subject);
-				msgPane.getChildren().add(content);
-				msgPane.getChildren().add(timestamp);
 				messagesPane.getChildren().add(msgPane);
 			}
 			messagesPane.setPrefHeight(100 * msgs.size());

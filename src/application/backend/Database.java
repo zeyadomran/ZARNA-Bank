@@ -1,4 +1,4 @@
-package application;
+package application.backend;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class Database {
 	 * 
 	 * @param id -> ID of the database
 	 */
-	Database() {
+	public Database() {
 		//this.id = id;
 		accounts = new ArrayList<Account>();
 	}
@@ -28,7 +28,7 @@ public class Database {
 	 * 
 	 * @param db -> the database to copy
 	 */
-	Database(Database db) {
+	public Database(Database db) {
 		//this.id = db.id;
 		this.accounts = copyAccountsList(db.accounts);
 	}
