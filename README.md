@@ -10,6 +10,10 @@ __________
 >1. Download the source code.
 >2. Import both JAR files in `<resources/libraries>`.
 >3. Run the program.
+##### How To Run The JUNIT Tests:
+>1. Download the JUNI Tests.
+>2. Move them to `<src/application/backend>`.
+>3. Run them.
 ________
 ##### Members:
 >* Zeyad Omran
